@@ -7,5 +7,9 @@
     <string name="login">Login</string>
     <string name="Mail">Mail</string>
     <string name="Password">Password</string>
+    <string name="blank_fields">Please, fill in the blanks</string>
+    <string name="user_not_found">User not found</string>
+    <string name="connection_error">Connection Error</string>
+    <string name="invalid_password">Invalid Password</string>
 
 </resources>
