@@ -15,9 +15,15 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.view.View;
 
 public class Comunicador {
 
@@ -32,17 +38,17 @@ public class Comunicador {
 		
 	    // Create a new HttpClient and Post Header
 	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpPost httppost = new HttpPost("http://connectwp.azurewebsites.net/api/login/");
+	    HttpPost httppost = new HttpPost("http://developmentpis.azurewebsites.net/api/Users/Login");
 	    try {
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	        nameValuePairs.add(new BasicNameValuePair("Email", user));
+	        nameValuePairs.add(new BasicNameValuePair("Mail", user));
 	        nameValuePairs.add(new BasicNameValuePair("Password", pass));
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
-	        //Obtengo el cÃ³digo de la respuesta http
+	        //Obtengo el codigo de la respuesta http
 	        int response_code = response.getStatusLine().getStatusCode();
 	        //Obtengo el nombre de usuario
 	        if (response_code==200){
@@ -77,31 +83,51 @@ public class Comunicador {
 	
 	public String[] getFriends(String id) {
 
-		String res_codigo="";
+		String[] result = {"-1","-1"};
+		 //crear un ArrayList bidimensional de enteros vacío
+        //Realmente se crea un ArrayList de ArrayLists de strings
+       // ArrayList<ArrayList<String>> array = new ArrayList<ArrayList<String>>();
 		
 	    // Create a new HttpClient and Post Header
 	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpGet httpGet = new HttpGet("http://connectwp.azurewebsites.net/api/Friends/GetAllFriends/" + id);
+	    HttpGet httpGet = new HttpGet("http://developmentpis.azurewebsites.net/api/Friends/GetAllFriends/" + id);
 		try {
 		
 		HttpResponse response = httpclient.execute(httpGet);
 		
-		String[] result={};
+		 //Obtengo el codigo de la respuesta http
+        int response_code = response.getStatusLine().getStatusCode();
+        result[0] = Integer.toString(response_code);
+        if (response_code==200){
+        	
+			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+	        String json = reader.readLine();
+	        result[1]=json;
+		
+        }
 		
 		return result;
 		
 		} catch (ClientProtocolException e) {
 	        // TODO Auto-generated catch block
-	    	String[] result={"-1"};
-	    	return result;
+	    	String[] result2={"-1"};
+	    	return result2;
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
-	    	String[] result={"-1"};
-	    	return result;
+	    	String[] result2={"-1"};
+	    	return result2;
 	    }
 		
 	}
 
-
+	public void logout(View view){
+		SharedPreferences pref = view.getContext().getSharedPreferences("prefs",Context.MODE_PRIVATE);
+		pref.edit().putBoolean("log_in", false).commit();
+		pref.edit().putString("user_name", "").commit();
+		pref.edit().putString("user_id", "").commit();
+        // go to previous screen when app icon in action bar is clicked
+        Intent intent = new Intent(view.getContext(), MainActivity.class);
+        view.getContext().startActivity(intent);
+	}
 
 }

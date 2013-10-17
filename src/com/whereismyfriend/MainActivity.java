@@ -100,7 +100,7 @@ public class MainActivity extends Activity {
 					pref.edit().putString("user_id", user_id).commit();
 					//Paso a la siguiente activity
 					Intent intent_name = new Intent();
-					intent_name.setClass(getApplicationContext(),Mapa.class);
+					intent_name.setClass(getApplicationContext(),Amigos.class);
 					intent_name.putExtra("name", user_name);
 					intent_name.putExtra("id", user_id);
 					startActivity(intent_name);
@@ -153,11 +153,11 @@ public class MainActivity extends Activity {
 		if (logueado){
 			//Redirijo a la activity con el Mapa
 			Intent intent_name = new Intent();
-			intent_name.setClass(getApplicationContext(), Mapa.class);
+			intent_name.setClass(getApplicationContext(), Amigos.class);
 			intent_name.putExtra("name", pref.getString("user_name", ""));
 			intent_name.putExtra("id", pref.getString("user_id", ""));
 			startActivity(intent_name);
-			
+			this.finish();
 		}
 		else{
 			//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
