@@ -20,6 +20,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -64,29 +65,42 @@ public class Amigos extends Activity {
 		       // setProgressBarIndeterminateVisibility(false);
 		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.INVISIBLE);
+		        ListView list = (ListView) findViewById(R.id.listView1);
 		        
 		        int codigo_res = Integer.parseInt(result[0]);
 				if (codigo_res==200){
 					Comunicador com= new Comunicador();
-					TableLayout tabla =  (TableLayout) findViewById(R.id.table);
-					//String[][] amigos = com.getFriends(getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_id","1"));
-					for (int i = 0; i < result.length + 1; i++) {
-						TableRow row= new TableRow(Amigos.context);
+					//TableLayout tabla =  (TableLayout) findViewById(R.id.table);
+					//String[] amigos = com.getFriends(getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_id","1"));
+					
+					
+					ListItem[] data= new ListItem[result.length+1];
+					
+					for (int i = 0; i < result.length+1; i++) {
+						//TableRow row= new TableRow(Amigos.context);
 						TextView name = new TextView(Amigos.context);
+						name.setTextSize(30);
+						
 						JSONTokener jsonT = new JSONTokener(result[1]);
 						
 						 try {
 							 	JSONArray jsonA = new JSONArray(jsonT);
 							 	JSONObject jsonO = jsonA.getJSONObject(i);
 								name.setText(jsonO.get("Name").toString());
-								row.addView(name);
-								tabla.addView(row,i);
+								//row.addView(name);
+								//tabla.addView(row,i);
+								
+								ListItem item = new ListItem(R.drawable.contacto,jsonO.get("Name").toString() );
+								data[i] = item;
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						
 					}
+					
+					ListAdapter adapter = new ListAdapter(Amigos.this, R.layout.list_item, data);
+					list.setAdapter(adapter);
 				}
 				else if (codigo_res==404) {
 					Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
