@@ -1,16 +1,26 @@
 package com.whereismyfriend;
 
+
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class Solicitudes extends Activity {
+	
+	
+	public static Activity activ;
+	private static Context context;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,13 +47,55 @@ public class Solicitudes extends Activity {
 	}
 	
 	public void logout(View view) {
-		//RUTINA AL APRETAR EL BOTON DE requests
+		//RUTINA AL APRETAR EL BOTON DE logout
 		Comunicador com = new Comunicador();
-		com.logout(view);
-		Intent intent_name = new Intent();
-		intent_name.setClass(getApplicationContext(), MainActivity.class);
-		startActivity(intent_name);
-		this.finish();
+		new consumidorPostLogout().execute();
+		
+	}
+	
+	
+	
+	//METODOS LLAMADOS PARA HACER EL LOGOUT
+    private class consumidorPostLogout extends AsyncTask<String, Void, String>{
+		protected String doInBackground(String...s) {
+			// TODO Auto-generated method stub
+			Comunicador com= new Comunicador();
+			String res = com.postLogout(context.getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_name", "1"));
+			return res;
+		}
+		
+		 @Override
+			protected void onPostExecute(String result){
+		        super.onPostExecute(result);
+		       // setProgressBarIndeterminateVisibility(false);
+		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+		        pbar.setVisibility(pbar.INVISIBLE);
+		        
+		        int codigo_res = Integer.parseInt(result);
+				if (codigo_res==200){
+					//Logout exitoso
+					SharedPreferences pref = context.getSharedPreferences("prefs",Context.MODE_PRIVATE);
+					pref.edit().putBoolean("log_in", false).commit();
+					pref.edit().putString("user_name", "").commit();
+					pref.edit().putString("user_id", "").commit();
+					
+					Intent intent_name = new Intent();
+					intent_name.setClass(getApplicationContext(), MainActivity.class);
+					startActivity(intent_name);
+					activ.finish();
+				}
+				else if (codigo_res==404) {
+					//USUARIO NO ENCONTRADO
+					
+			    	Toast.makeText(getApplicationContext(), R.string.user_not_found , Toast.LENGTH_LONG).show();
+				}
+				else{
+					//OTRO TIPO DE ERROR
+			    	Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
+					
+				}
+			}
+		
 	}
 	
 	

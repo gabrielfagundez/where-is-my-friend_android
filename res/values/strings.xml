@@ -13,5 +13,9 @@
     <string name="invalid_password" translatable="false">Invalid Password</string>
     <string name="logout" translatable="false">logout</string>
     <string name="settings" translatable="false">settings</string>
-
+	<string name="requestsbar" translatable="false">Requests</string>
+    <string name="settingsbar" translatable="false">Settings</string>
+    <string name="mapbar" translatable="false">Map</string>
+    <string name="friendsbar" translatable="false">Friends</string>
+    
 </resources>
