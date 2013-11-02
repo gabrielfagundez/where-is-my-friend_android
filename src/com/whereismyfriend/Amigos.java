@@ -192,6 +192,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 					pref.edit().putBoolean("log_in", false).commit();
 					pref.edit().putString("user_name", "").commit();
 					pref.edit().putString("user_id", "").commit();
+					pref.edit().putString("user_mail", "").commit();
 					
 					Intent intent_name = new Intent();
 					intent_name.setClass(getApplicationContext(), MainActivity.class);
