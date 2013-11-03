@@ -28,8 +28,10 @@
             android:layout_height="40dp"
             android:background="@null"
             android:onClick="logout"
+            android:padding="5dp"
             android:scaleType="fitStart"
-            android:src="@drawable/logout_icon" />
+            android:src="@drawable/logout" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -38,26 +40,28 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:text="Mapa" />
+            android:layout_weight="1"
+            android:clickable="false"
+            android:text="@string/mapbar"
+            android:textColor="@color/grisclarotexto" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="1"
             android:onClick="amigos"
-            android:text="Amigos" />
+            android:text="@string/friendsbar" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="1"
             android:onClick="requests"
-            android:text="Requests" />
+            android:text="@string/requestsbar" />
     </LinearLayout>
 
     <LinearLayout

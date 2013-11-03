@@ -27,8 +27,9 @@
             android:layout_height="40dp"
             android:background="@null"
             android:onClick="logout"
+            android:padding="5dp"
             android:scaleType="fitStart"
-            android:src="@drawable/logout_icon" />
+            android:src="@drawable/logout" />
 
     </LinearLayout>
 
@@ -38,26 +39,28 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="1"
             android:onClick="mapa"
             android:text="Mapa" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="1"
             android:onClick="amigos"
             android:text="Amigos" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:text="Requests" />
+            android:layout_weight="1"
+            android:clickable="false"
+            android:text="Requests"
+            android:textColor="@color/grisclarotexto" />
 
     </LinearLayout>
 

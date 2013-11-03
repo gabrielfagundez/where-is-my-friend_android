@@ -7,6 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_gravity="center"
         android:background="#0A85FF"
         android:gravity="right|center_vertical"
         android:paddingRight="10dp" >
@@ -15,7 +16,8 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:layout_weight="0.56"
             android:paddingLeft="20dp"
             android:text="@string/friendsbar"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -23,10 +25,15 @@
 
         <ProgressBar
             android:id="@+id/progressBar1"
-            style="?android:attr/progressBarStyleLarge"
+            style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3" />
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:maxHeight="30dip"
+            android:maxWidth="30dip"
+            android:minHeight="30dip"
+            android:minWidth="30dip" />
 
         <ImageButton
             android:id="@+id/imageButton1"
@@ -34,8 +41,10 @@
             android:layout_height="40dp"
             android:background="@null"
             android:onClick="logout"
+            android:padding="5dp"
             android:scaleType="fitStart"
-            android:src="@drawable/logout_icon" />
+            android:src="@drawable/logout" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -44,24 +53,26 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:onClick="mapa"
-            android:text="Mapa" />
+            android:text="@string/mapbar" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:text="Amigos" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:text="@string/friendsbar"
+            android:textColor="@color/grisclarotexto" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:onClick="requests"
             android:text="Requests" />
 
