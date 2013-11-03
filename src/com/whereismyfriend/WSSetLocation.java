@@ -20,21 +20,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class WSSetLocation {
-	/*Esta metodo hace la llamada al servidor para el caso del Sign Up, devuelve un array de string
-	 * que contiene en la posicion 0 el codigo http retornado por el servidor, y luego cada uno de 
-	 * los campos que devuelve el signup en respuesta. Si el codigo no es 200 los demas campos son
-	 * strings vacios.
-	 * 
-	 * Los campos retornados son los siguientes y en este orden:
-	 * 
-	 * [0]--> Codigo http retornado
-	 * [1]--> Id de usuario
-	 * [2]--> Nombre
-	 * [3]--> Mail
-	 * [4]--> Id de facebook
-	 * [5]-->Id de linkedin
-	 * [6]--> Password
-	 * */
 
 	public String[] llamarServer(String mail, String latitude, String longitude) {
 		

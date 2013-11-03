@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -37,10 +38,15 @@ public class Comunicador {
 		String res_codigo="";
 		String res_mail="";
 		
-	    // Create a new HttpClient and Post Header
-	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpPost httppost = new HttpPost("http://developmentpis.azurewebsites.net/api/Users/LoginWhere");
+
 	    try {
+	    	Properties prop = new Properties();
+			prop.load(getClass().getResourceAsStream("server.properties"));
+			String server = prop.getProperty("loginwhere");
+		    // Create a new HttpClient and Post Header
+		    HttpClient httpclient = new DefaultHttpClient();
+		    HttpPost httppost = new HttpPost(server);
+			
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
 	        nameValuePairs.add(new BasicNameValuePair("Mail", user));
@@ -88,14 +94,17 @@ public class Comunicador {
 	public String[] getFriends(String id) {
 
 		String[] result = {"-1","-1"};
-		 //crear un ArrayList bidimensional de enteros vacío
+		 //crear un ArrayList bidimensional de enteros vacï¿½o
         //Realmente se crea un ArrayList de ArrayLists de strings
        // ArrayList<ArrayList<String>> array = new ArrayList<ArrayList<String>>();
 		
-	    // Create a new HttpClient and Post Header
-	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpGet httpGet = new HttpGet("http://developmentpis.azurewebsites.net/api/Friends/GetAllFriends/" + id);
 		try {
+			Properties prop = new Properties();
+			prop.load(getClass().getResourceAsStream("server.properties"));
+			String server = prop.getProperty("getallfriends");
+			  // Create a new HttpClient and Post Header
+		    HttpClient httpclient = new DefaultHttpClient();
+		    HttpGet httpGet = new HttpGet(server + id);
 		
 		HttpResponse response = httpclient.execute(httpGet);
 		
@@ -127,10 +136,14 @@ public class Comunicador {
 	public String postLogout(String user){
 	
 		
-		// Create a new HttpClient and Post Header
-	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpPost httppost = new HttpPost("http://developmentpis.azurewebsites.net/api/Users/LogoutWhere");
+
 	    try {
+			Properties prop = new Properties();
+			prop.load(getClass().getResourceAsStream("server.properties"));
+			String server = prop.getProperty("logoutwhere");
+			// Create a new HttpClient and Post Header
+		    HttpClient httpclient = new DefaultHttpClient();
+		    HttpPost httppost = new HttpPost(server);
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 	        nameValuePairs.add(new BasicNameValuePair("Mail", user));
@@ -159,9 +172,13 @@ public class Comunicador {
 		String[] result = {"-1","-1"};
 		
 		// Create a new HttpClient and Post Header
-	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpPost httppost = new HttpPost("http://developmentpis.azurewebsites.net/api/Solicitudes/Send");
+	    
 	    try {
+	    	Properties prop = new Properties();
+			prop.load(getClass().getResourceAsStream("server.properties"));
+			String server = prop.getProperty("solicitudsend");
+			HttpClient httpclient = new DefaultHttpClient();
+		    HttpPost httppost = new HttpPost(server);
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 	        nameValuePairs.add(new BasicNameValuePair("IdFrom", userid));
@@ -212,9 +229,12 @@ public class Comunicador {
 		 
 		
 	    // Create a new HttpClient and Post Header
-	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpGet httpGet = new HttpGet("http://developmentpis.azurewebsites.net/api/Geolocation/GetLastFriendsLocationsById/" + userid);
 		try {
+			Properties prop = new Properties();
+			prop.load(getClass().getResourceAsStream("server.properties"));
+			String server = prop.getProperty("lastfriendlocation");
+			  HttpClient httpclient = new DefaultHttpClient();
+			    HttpGet httpGet = new HttpGet(server + userid);
 		
 			HttpResponse response = httpclient.execute(httpGet);
 			
