@@ -17,5 +17,14 @@
     <string name="settingsbar" >Settings</string>
     <string name="mapbar" >Map</string>
     <string name="friendsbar">Friends</string>
+    <string name="confirm_logout">Are you sure you want to log out?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="aceptar" >Accept</string>
+    <string name="rechazar" >Reject</string>
+    <string name="solicitud" >Do you wish to accept the request from</string>
+    <string name="solicitud_titulo" >Accept or Reject?</string>
+    
+    
     
 </resources>

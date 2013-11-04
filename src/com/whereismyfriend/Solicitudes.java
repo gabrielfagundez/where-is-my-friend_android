@@ -1,9 +1,17 @@
 package com.whereismyfriend;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -12,22 +20,37 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class Solicitudes extends Activity {
+
+
+
+public class Solicitudes extends Activity implements AdapterView.OnItemClickListener{
 	
 	
 	public static Activity activ;
 	private static Context context;
+	public static String idSol;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.solicitudes);
 		
-		
+		context = getApplicationContext();
+
+		activ = this;
+
+		ListView list = (ListView) findViewById(R.id.list);
+		list.setOnItemClickListener(this);
+		new consumidorPost().execute();
+
 	}
+	
 	
 	
 	public void mapa(View view) {
@@ -60,7 +83,7 @@ public class Solicitudes extends Activity {
 		protected String doInBackground(String...s) {
 			// TODO Auto-generated method stub
 			Comunicador com= new Comunicador();
-			String res = com.postLogout(context.getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_name", "1"));
+			String res = com.postLogout(context.getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_mail", "1"));
 			return res;
 		}
 		
@@ -78,6 +101,7 @@ public class Solicitudes extends Activity {
 					pref.edit().putBoolean("log_in", false).commit();
 					pref.edit().putString("user_name", "").commit();
 					pref.edit().putString("user_id", "").commit();
+					pref.edit().putString("user_mail", "").commit();
 					
 					Intent intent_name = new Intent();
 					intent_name.setClass(getApplicationContext(), MainActivity.class);
@@ -97,31 +121,81 @@ public class Solicitudes extends Activity {
 			}
 		
 	}
+    
 	
-	
-	 //Manejo de los botones de la Action Bar
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	    	//Al apretar el boton de logout
-	        case R.id.action_logout:
-	        	//Actualizo las preferencias
-	        	SharedPreferences pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);
-				pref.edit().putBoolean("log_in", false).commit();
-				pref.edit().putString("user_name", "").commit();
-				pref.edit().putString("user_id", "").commit();
-	            // go to previous screen when app icon in action bar is clicked
-	            Intent intent = new Intent(this, MainActivity.class);
-	            startActivity(intent);
-	            finish();
-	            return true;
-	         //Al apretar el boton de settings
-	    }
-	    return super.onOptionsItemSelected(item);
-	}
-	
-	
-	
+	 private class consumidorPost extends AsyncTask<String[], Void, String[]>{
+			protected String[] doInBackground(String[]... arg0) {
+				// TODO Auto-generated method stub
+				Comunicador com= new Comunicador();
+				String[] res= com.getSolicitudes(getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_id", ""));
+				return res;
+			}
+			
+			 @Override
+				protected void onPostExecute(String[] result){
+			        super.onPostExecute(result);
+			       // setProgressBarIndeterminateVisibility(false);
+			        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+			        pbar.setVisibility(pbar.INVISIBLE);
+			        ListView list = (ListView) findViewById(R.id.list);
+			        
+			        int codigo_res = Integer.parseInt(result[0]);
+					if (codigo_res==200){
+						Comunicador com= new Comunicador();
+						
+						try {
+							
+							JSONTokener jsonT = new JSONTokener(result[1]);
+							JSONArray jsonA = new JSONArray(jsonT);
+							
+							ListItem[] data= new ListItem[jsonA.length()];
+							
+							for (int i = 0; i < jsonA.length(); i++) {
+									//TextView name = new TextView(Solicitudes.context);
+									//name.setTextSize(30);
+								
+								 	
+								 	JSONObject jsonO = jsonA.getJSONObject(i);
+									//name.setText(jsonO.get("Name").toString());
+									
+									ListItem item = new ListItem(R.drawable.contacto,jsonO.get("SolicitudFromNombre").toString() );
+									item.setIdSol(jsonO.get("SolicitudId").toString());
+									item.setName(jsonO.get("SolicitudFromNombre").toString());
+									data[i] = item;
+									
+									//Amigo a = new Amigo(jsonO.get("Name").toString(), jsonO.get("Mail").toString(), jsonO.get("Id").toString());
+									//ManejadorAmigos ma = ManejadorAmigos.getInstance();
+									//ma.agregarAmigo(a);
+									
+							}
+							
+							ListAdapter adapter = new ListAdapter(Solicitudes.this, R.layout.list_item, data);
+							list.setAdapter(adapter);
+							list.setLongClickable(true);
+							
+							
+						} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+						}
+							
+						
+						
+					}
+					else if (codigo_res==404) {
+						Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+					}
+					else if (codigo_res==401){
+						Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+					}
+					else{
+						//OTRO TIPO DE ERROR
+				    	Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
+						
+					}
+				}
+			
+		}
 	
 	
 	
@@ -147,7 +221,114 @@ public class Solicitudes extends Activity {
 	
 	
 	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+		// TODO Auto-generated method stub
+		ListItem item =  (ListItem) l.getItemAtPosition(position);
+		ManejadorAmigos ma = ManejadorAmigos.getInstance();
+		this.idSol = item.getIdSol();
+		
+		final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle(getString(R.string.solicitud_titulo));
+		alertDialog.setMessage(getString(R.string.solicitud) + " " + item.getName() );
+		alertDialog.setButton(getString(R.string.aceptar), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			// here you can add functions
+					
+				new consumidorPostAceptarSolicitud().execute();
+			}
+		});
+		alertDialog.setButton2(getString(R.string.rechazar), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			// here you can add functions
+					
+				new consumidorPostRechazarSolicitud().execute();
+
+			}
+		});
+		alertDialog.setIcon(R.drawable.contacto);
+		alertDialog.show();	
+	}
 	
+	 private class consumidorPostAceptarSolicitud extends AsyncTask<String[], Void, String[]>{
+			protected String[] doInBackground(String[]... arg0) {
+				// TODO Auto-generated method stub
+				Comunicador com= new Comunicador();
+				String[] res= com.aceptarSolicitud((getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_id", "")), Solicitudes.idSol);
+				return res; 
+			}
+			
+			 @Override
+				protected void onPostExecute(String[] result){
+			        super.onPostExecute(result);
+			        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+			        pbar.setVisibility(pbar.INVISIBLE);
+			        ListView list = (ListView) findViewById(R.id.list);
+			        
+			        int codigo_res = Integer.parseInt(result[0]);
+					if (codigo_res==200){
+						
+						Toast.makeText(getApplicationContext(),"Acepto solicitud correctamente"+result[1], Toast.LENGTH_LONG).show();
+
+							
+						
+						
+					}
+					else if (codigo_res==404) {
+						Toast.makeText(getApplicationContext(),"Error404", Toast.LENGTH_LONG).show();
+					}
+					else if (codigo_res==401){
+						Toast.makeText(getApplicationContext(),"Error401", Toast.LENGTH_LONG).show();
+					}
+					else{
+						//OTRO TIPO DE ERROR
+				    	Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
+						
+					}
+				}
+			
+		}
 	
-	
+	 
+	 private class consumidorPostRechazarSolicitud extends AsyncTask<String[], Void, String[]>{
+			protected String[] doInBackground(String[]... arg0) {
+				// TODO Auto-generated method stub
+				Comunicador com= new Comunicador();
+				String[] res= com.rechazarSolicitud((getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_id", "")), Solicitudes.idSol);
+				return res; 
+			}
+			
+			 @Override
+				protected void onPostExecute(String[] result){
+			        super.onPostExecute(result);
+			        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+			        pbar.setVisibility(pbar.INVISIBLE);
+			        ListView list = (ListView) findViewById(R.id.list);
+			        
+			        int codigo_res = Integer.parseInt(result[0]);
+					if (codigo_res==200){
+						
+						Toast.makeText(getApplicationContext(),"Rechazo solicitud correctamente"+result[1], Toast.LENGTH_LONG).show();
+
+							
+						
+						
+					}
+					else if (codigo_res==404) {
+						Toast.makeText(getApplicationContext(),"Error404", Toast.LENGTH_LONG).show();
+					}
+					else if (codigo_res==401){
+						Toast.makeText(getApplicationContext(),"Error401", Toast.LENGTH_LONG).show();
+					}
+					else{
+						//OTRO TIPO DE ERROR
+				    	Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
+						
+					}
+				}
+			
+		}
+	 
+	 
 }

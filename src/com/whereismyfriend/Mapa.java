@@ -1,13 +1,22 @@
 package com.whereismyfriend;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
 import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -19,12 +28,15 @@ import com.google.android.gms.maps.model.LatLng;
 public class Mapa extends android.support.v4.app.FragmentActivity implements LocationListener {
 	
     GoogleMap googleMap;
+	private static Context context;
+	public static Activity activ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mapa);
-		
+		Mapa.context = getApplicationContext();
+		activ = this;
 		// Getting Google Play availability status
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 
@@ -109,5 +121,83 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	public void amigos (View view){
+		Intent intent_name = new Intent();
+		intent_name.setClass(getApplicationContext(), Amigos.class);
+		startActivity(intent_name);
+		finish();
+	}
+	
+	public void requests (View view){
+		Intent intent_name = new Intent();
+		intent_name.setClass(getApplicationContext(), Solicitudes.class);
+		startActivity(intent_name);
+		finish();
+	}
+	
+	public void logout(View view) {
+		new AlertDialog.Builder(this)
+        .setMessage(getResources().getString(R.string.confirm_logout))
+        .setCancelable(true)
+        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+        		//RUTINA AL APRETAR EL BOTON DE logout
+        		Comunicador com = new Comunicador();
+        		new consumidorPostLogout().execute();	            	
+            }
+        })
+        .setNegativeButton(getResources().getString(R.string.no), null)
+        .show();
+
+		
+	}
+	
+
+	//METODOS LLAMADOS PARA HACER EL LOGOUT
+    private class consumidorPostLogout extends AsyncTask<String, Void, String>{
+		protected String doInBackground(String...s) {
+			// TODO Auto-generated method stub
+			Comunicador com= new Comunicador();
+			String res = com.postLogout(context.getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_name", "1"));
+			return res;
+		}
+		
+		 @Override
+			protected void onPostExecute(String result){
+		        super.onPostExecute(result);
+		       // setProgressBarIndeterminateVisibility(false);
+		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+		        pbar.setVisibility(pbar.INVISIBLE);
+		        
+		        int codigo_res = Integer.parseInt(result);
+				if (codigo_res==200){
+					//Logout exitoso
+					SharedPreferences pref = context.getSharedPreferences("prefs",Context.MODE_PRIVATE);
+					pref.edit().putBoolean("log_in", false).commit();
+					pref.edit().putString("user_name", "").commit();
+					pref.edit().putString("user_id", "").commit();
+					
+					Intent intent_name = new Intent();
+					intent_name.setClass(getApplicationContext(), MainActivity.class);
+					startActivity(intent_name);
+					activ.finish();
+				}
+				else if (codigo_res==404) {
+					//USUARIO NO ENCONTRADO
+					
+			    	Toast.makeText(getApplicationContext(), R.string.user_not_found , Toast.LENGTH_LONG).show();
+				}
+				else{
+					//OTRO TIPO DE ERROR
+			    	Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
+					
+				}
+			}
+		
+	}
+	
+	
+	
 
 }
