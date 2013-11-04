@@ -8,6 +8,7 @@ import org.json.JSONTokener;
 
 
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -70,9 +71,22 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 	}
 	
 	public void logout(View view) {
-		//RUTINA AL APRETAR EL BOTON DE logout
-		Comunicador com = new Comunicador();
-		new consumidorPostLogout().execute();
+		new AlertDialog.Builder(this)
+        .setMessage(getResources().getString(R.string.confirm_logout))
+        .setCancelable(true)
+        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+        		//RUTINA AL APRETAR EL BOTON DE logout
+            	ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+        		pbar.setVisibility(pbar.VISIBLE);
+        		Comunicador com = new Comunicador();
+        		new consumidorPostLogout().execute();
+	            	
+            }
+        })
+        .setNegativeButton(getResources().getString(R.string.no), null)
+        .show();
+
 		
 	}
 	

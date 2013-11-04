@@ -75,6 +75,8 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
             }
             locationManager.requestLocationUpdates(provider, 5000, 0, this);
         }
+        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+		pbar.setVisibility(View.INVISIBLE);
 	}
 	
 	@Override
@@ -143,6 +145,8 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
         .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
         		//RUTINA AL APRETAR EL BOTON DE logout
+                ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+        		pbar.setVisibility(View.VISIBLE);
         		Comunicador com = new Comunicador();
         		new consumidorPostLogout().execute();	            	
             }
@@ -159,7 +163,7 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 		protected String doInBackground(String...s) {
 			// TODO Auto-generated method stub
 			Comunicador com= new Comunicador();
-			String res = com.postLogout(context.getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_name", "1"));
+			String res = com.postLogout(context.getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_mail", "1"));
 			return res;
 		}
 		
@@ -177,6 +181,7 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 					pref.edit().putBoolean("log_in", false).commit();
 					pref.edit().putString("user_name", "").commit();
 					pref.edit().putString("user_id", "").commit();
+					pref.edit().putString("user_mail", "").commit();
 					
 					Intent intent_name = new Intent();
 					intent_name.setClass(getApplicationContext(), MainActivity.class);
