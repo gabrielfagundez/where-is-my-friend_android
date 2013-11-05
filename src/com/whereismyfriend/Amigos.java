@@ -10,10 +10,11 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 
-
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -160,10 +161,21 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	}
 	
 	public void logout(View view) {
-		//RUTINA AL APRETAR EL BOTON DE logout
-		ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
-		pbar.setVisibility(view.VISIBLE);
-		new consumidorPostLogout().execute();
+		new AlertDialog.Builder(this)
+        .setMessage(getResources().getString(R.string.confirm_logout))
+        .setCancelable(true)
+        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+        		//RUTINA AL APRETAR EL BOTON DE logout
+        		ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+        		pbar.setVisibility(pbar.VISIBLE);
+        		new consumidorPostLogout().execute();
+	            	
+            }
+        })
+        .setNegativeButton(getResources().getString(R.string.no), null)
+        .show();
+
 		
 	}
 	
@@ -257,32 +269,6 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		
 	}
 	
-	 //Manejo de los botones de la Action Bar
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	    	//Al apretar el boton de logout
-	        case R.id.action_logout:
-	        	//Actualizo las preferencias
-	        	SharedPreferences pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);
-				pref.edit().putBoolean("log_in", false).commit();
-				pref.edit().putString("user_name", "").commit();
-				pref.edit().putString("user_id", "").commit();
-	            // go to previous screen when app icon in action bar is clicked
-	            Intent intent = new Intent(this, MainActivity.class);
-	            startActivity(intent);
-	            finish();
-	            return true;
-	         //Al apretar el boton de settings
-	    }
-	    return super.onOptionsItemSelected(item);
-	}
-	
-	
-	
-	
-	
-	
 	
 	
 	@Override
@@ -307,7 +293,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 		// TODO Auto-generated method stub
 		ListItem item =  (ListItem) l.getItemAtPosition(position);
-	    this.IdTo = item.id;
+	    this.IdTo = item.getId();
 	    ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 	    pbar.setVisibility(l.VISIBLE);
 	    new consumidorPostSolicitud().execute();

@@ -21,6 +21,17 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#FFFFFF" />
 
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:maxHeight="30dip"
+            android:maxWidth="30dip"
+            android:minHeight="30dip"
+            android:minWidth="30dip" />
+
         <ImageButton
             android:id="@+id/imageButton1"
             android:layout_width="40dp"
@@ -64,34 +75,10 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView1"
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <TableRow
-                    android:id="@+id/tableRow1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/tableRow2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </TableRow>
-            </TableLayout>
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent" >
+    </ListView>
 
 </LinearLayout>
