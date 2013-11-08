@@ -4,6 +4,8 @@
 
 
 
+import java.util.concurrent.ExecutionException;
+
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,13 +37,16 @@ public class MainActivity extends Activity {
 		
 		fa = this;
 		
+        
+		
+		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		//Escondo los iconos del menú de logout y settings
+		//Escondo los iconos del menï¿½ de logout y settings
 		//menu.findItem(R.id.action_logout).setVisible(false);
 		menu.findItem(R.id.action_settings).setVisible(false);
 		return true;
@@ -57,7 +62,7 @@ public class MainActivity extends Activity {
 	    String password_str = password.getText().toString();
 	    ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 	    
-	    //Si algún campo está vacio, evito la llamada al server
+	    //Si algï¿½n campo estï¿½ vacio, evito la llamada al server
 	    if ((mail_str.compareTo("")==0) || (password_str.compareTo("")==0)){
 	    	Toast.makeText(getApplicationContext(), R.string.blank_fields , Toast.LENGTH_LONG).show();
 	    }
@@ -90,6 +95,9 @@ public class MainActivity extends Activity {
 		        
 		        int codigo_res = Integer.parseInt(result[0]);
 				if (codigo_res==200){
+					
+					
+					
 					//Login exitoso
 					//Actualizamos las variables globales
 					user_id=result[1];
@@ -150,7 +158,7 @@ public class MainActivity extends Activity {
 		super.onResume();
 		
 		
-		//Veo si ya está logueado
+		//Veo si ya estï¿½ logueado
 		SharedPreferences pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);
 		boolean logueado = pref.getBoolean("log_in", false);
 		if (logueado){
