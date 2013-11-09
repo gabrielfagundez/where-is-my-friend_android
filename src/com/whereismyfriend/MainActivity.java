@@ -4,6 +4,8 @@
 
 
 
+import java.util.concurrent.ExecutionException;
+
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,7 +41,6 @@ public class MainActivity extends Activity {
 		deviceid= intent.getStringExtra("deviceid");
 		if (deviceid==null)
 			deviceid="";
-
 	}
 
 	@Override
@@ -95,6 +96,9 @@ public class MainActivity extends Activity {
 		        
 		        int codigo_res = Integer.parseInt(result[0]);
 				if (codigo_res==200){
+					
+					
+					
 					//Login exitoso
 					//Actualizamos las variables globales
 					user_id=result[1];

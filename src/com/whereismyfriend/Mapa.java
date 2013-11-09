@@ -1,5 +1,9 @@
 package com.whereismyfriend;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,6 +17,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -24,12 +29,56 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Mapa extends android.support.v4.app.FragmentActivity implements LocationListener {
 	
     GoogleMap googleMap;
 	private static Context context;
 	public static Activity activ;
+	
+	final int MARKER_UPDATE_INTERVAL = 10000; /* milliseconds */
+    Handler handler = new Handler();
+
+    Runnable updateMarker = new Runnable() {
+        @Override
+        public void run() {
+            googleMap.clear();
+            
+            ManejadorAmigos manejador = ManejadorAmigos.getInstance();
+
+			
+			try {
+				manejador.actualizarPosiciones();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+            ArrayList<Amigo> amigos = manejador.getAmigosVisibles();
+            
+            if (amigos != null){
+            	Iterator<Amigo> it = amigos.iterator();
+                while(it.hasNext())
+                {
+                    Amigo am = it.next();
+                    MarkerOptions mr = new MarkerOptions();
+                    mr.position(new LatLng(am.getLat(),am.getLon()));
+                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
+                    googleMap.addMarker(mr);
+                }
+            }
+            
+            //marker = map.addMarker(new MarkerOptions().position(location));
+
+            handler.postDelayed(this, MARKER_UPDATE_INTERVAL);
+        }
+    };
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +122,57 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
             if(location!=null){
                 onLocationChanged(location);
             }
-            locationManager.requestLocationUpdates(provider, 5000, 0, this);
+            locationManager.requestLocationUpdates(provider, 5000, 0, this);		
+        
+            ManejadorAmigos manejador = ManejadorAmigos.getInstance();
+
+			
+			try {
+				manejador.actualizarPosiciones();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+            ArrayList<Amigo> amigos = manejador.getAmigosVisibles();
+            
+            if (amigos != null){
+            	Iterator<Amigo> it = amigos.iterator();
+                while(it.hasNext())
+                {
+                    Amigo am = it.next();
+                    MarkerOptions mr = new MarkerOptions();
+                    mr.position(new LatLng(am.getLat(),am.getLon()));
+                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
+                    googleMap.addMarker(mr);
+                }
+            }
+            
+            
+            
+      /*      MarkerOptions a = new MarkerOptions();
+            a.position(new LatLng(-34,-56));
+            a.title("prueba");
+            googleMap.addMarker(a);
+            //m.setPosition(new LatLng(50,5));*/
+        
         }
+            
+        handler.postDelayed(updateMarker, MARKER_UPDATE_INTERVAL);
+        
         ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		pbar.setVisibility(View.INVISIBLE);
 	}
+	
+	@Override
+    protected void onDestroy() {
+        handler.removeCallbacks(updateMarker);
+
+        super.onDestroy();
+    }
 	
 	@Override
     public void onLocationChanged(Location location) {
@@ -98,7 +193,7 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
         // Zoom in the Google Map
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
-        // Setting latitude and longitude in the TextView tv_location
+        
 
     }
 	
