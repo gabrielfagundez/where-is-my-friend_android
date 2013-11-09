@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -27,21 +28,25 @@ public class MainActivity extends Activity {
 	String user_name;
 	String user_id;
 	String user_mail;
+	String deviceid="";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
 		fa = this;
-		
+		Intent intent = getIntent();
+		deviceid= intent.getStringExtra("deviceid");
+		if (deviceid==null)
+			deviceid="";
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		//Escondo los iconos del menú de logout y settings
+		//Escondo los iconos del menï¿½ de logout y settings
 		//menu.findItem(R.id.action_logout).setVisible(false);
 		menu.findItem(R.id.action_settings).setVisible(false);
 		return true;
@@ -57,13 +62,13 @@ public class MainActivity extends Activity {
 	    String password_str = password.getText().toString();
 	    ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 	    
-	    //Si algún campo está vacio, evito la llamada al server
+	    //Si algï¿½n campo estï¿½ vacio, evito la llamada al server
 	    if ((mail_str.compareTo("")==0) || (password_str.compareTo("")==0)){
 	    	Toast.makeText(getApplicationContext(), R.string.blank_fields , Toast.LENGTH_LONG).show();
 	    }
 	    else{
 	    	//Hago la llamada al server
-	    	String [] parametros = {mail_str,password_str};
+	    	String [] parametros = {mail_str,password_str, deviceid};
 	    	pbar.setVisibility(view.VISIBLE);
 	    	//setProgressBarIndeterminateVisibility(true);
 	    	
@@ -77,7 +82,7 @@ public class MainActivity extends Activity {
 		protected String[] doInBackground(String[]... arg0) {
 			// TODO Auto-generated method stub
 			Comunicador com= new Comunicador();
-			String[] res= com.postLogin(arg0[0][0], arg0[0][1]);
+			String[] res= com.postLogin(arg0[0][0], arg0[0][1], arg0[0][2]);
 			return res;
 		}
 		
@@ -150,7 +155,7 @@ public class MainActivity extends Activity {
 		super.onResume();
 		
 		
-		//Veo si ya está logueado
+		//Veo si ya estï¿½ logueado
 		SharedPreferences pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);
 		boolean logueado = pref.getBoolean("log_in", false);
 		if (logueado){
