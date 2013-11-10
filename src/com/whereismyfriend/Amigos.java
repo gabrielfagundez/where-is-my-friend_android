@@ -9,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -81,6 +80,8 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.INVISIBLE);
 		        ListView list = (ListView) findViewById(R.id.list);
+		        TextView text = (TextView) findViewById(R.id.textView2);
+
 		        
 		        int codigo_res = Integer.parseInt(result[0]);
 				if (codigo_res==200){
@@ -95,6 +96,10 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 						
 						ListItem[] data= new ListItem[jsonA.length()];
 						
+						if (jsonA.length() == 0){
+							text.setText(getString(R.string.no_amigos));
+						}
+						
 						for (int i = 0; i < jsonA.length(); i++) {
 								//TableRow row= new TableRow(Amigos.context);
 								TextView name = new TextView(Amigos.context);
@@ -108,6 +113,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 								
 								ListItem item = new ListItem(R.drawable.contacto,jsonO.get("Name").toString() );
 								item.setId(jsonO.get("Id").toString());
+								item.setName(jsonO.get("Name").toString());
 								data[i] = item;
 								
 								Amigo a = new Amigo(jsonO.get("Name").toString(), jsonO.get("Mail").toString(), jsonO.get("Id").toString());
@@ -250,7 +256,8 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 					
 					Toast.makeText(getApplicationContext(),"Mando solicitud correctamente"+result[1], Toast.LENGTH_LONG).show();
 
-						
+					new consumidorPost().execute();
+
 					
 					
 				}
@@ -296,7 +303,26 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	    this.IdTo = item.getId();
 	    ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 	    pbar.setVisibility(l.VISIBLE);
-	    new consumidorPostSolicitud().execute();
+	    
+	    final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle(getString(R.string.solicitud_titulo));
+		alertDialog.setMessage(getString(R.string.enviar_solicitud) + " " + item.getName() );
+		alertDialog.setButton(getString(R.string.aceptar), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			// here you can add functions
+					
+			    new consumidorPostSolicitud().execute();
+			}
+		});
+		alertDialog.setButton2(getString(R.string.rechazar), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			// here you can add functions
+					
+			}
+		});
+		alertDialog.setIcon(R.drawable.contacto);
+		alertDialog.show();	
+	    
 	}
 	
 	

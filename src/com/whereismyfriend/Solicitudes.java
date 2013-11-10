@@ -152,6 +152,8 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 			        pbar.setVisibility(pbar.INVISIBLE);
 			        ListView list = (ListView) findViewById(R.id.list);
+			        TextView text = (TextView) findViewById(R.id.textView2);
+
 			        
 			        int codigo_res = Integer.parseInt(result[0]);
 					if (codigo_res==200){
@@ -163,6 +165,10 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 							JSONArray jsonA = new JSONArray(jsonT);
 							
 							ListItem[] data= new ListItem[jsonA.length()];
+							
+							if (jsonA.length() == 0){
+								text.setText(getString(R.string.no_solicitudes));
+							}
 							
 							for (int i = 0; i < jsonA.length(); i++) {
 									//TextView name = new TextView(Solicitudes.context);
@@ -283,9 +289,11 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			        int codigo_res = Integer.parseInt(result[0]);
 					if (codigo_res==200){
 						
-						Toast.makeText(getApplicationContext(),"Acepto solicitud correctamente"+result[1], Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),"Acepto solicitud correctamente", Toast.LENGTH_LONG).show();
 
-							
+						new consumidorPost().execute();
+						
+
 						
 						
 					}
@@ -323,9 +331,9 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			        int codigo_res = Integer.parseInt(result[0]);
 					if (codigo_res==200){
 						
-						Toast.makeText(getApplicationContext(),"Rechazo solicitud correctamente"+result[1], Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),"Rechazo solicitud correctamente", Toast.LENGTH_LONG).show();
 
-							
+						//new consumidorPost().execute();	
 						
 						
 					}
