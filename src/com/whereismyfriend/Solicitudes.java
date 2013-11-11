@@ -141,7 +141,7 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			protected String[] doInBackground(String[]... arg0) {
 				// TODO Auto-generated method stub
 				Comunicador com= new Comunicador();
-				String[] res= com.getSolicitudes(getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_id", ""));
+				String[] res= com.getSolicitudes(getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_id", ""), getSharedPreferences("prefs",Context.MODE_PRIVATE).getString("user_mail", ""));
 				return res;
 			}
 			

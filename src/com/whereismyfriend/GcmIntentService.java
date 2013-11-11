@@ -64,7 +64,7 @@ public class GcmIntentService extends IntentService {
         	if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // Post notification of received message.
         		if (extras.getString("alert")!=null)
-        			sendNotification(extras.getString("alert"));
+        			sendNotification(extras.getString("alert"), extras.getString("badge"));
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
@@ -75,14 +75,16 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String msg) {
+    private void sendNotification(String msg, String badge) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, Solicitudes.class), 0);
 
-
+        if (Integer.parseInt(badge)>1)
+        	msg=getResources().getString(R.string.push_no_leidas_1)+ " "+ badge + " "+ getResources().getString(R.string.push_no_leidas_2);
+        
         
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
@@ -97,15 +99,15 @@ public class GcmIntentService extends IntentService {
 
         switch (am.getRingerMode()) {
             case AudioManager.RINGER_MODE_SILENT:
-                mBuilder.setLights(Color.RED, 3000, 3000);
+                mBuilder.setLights(Color.CYAN, 3000, 3000);
                 break;
             case AudioManager.RINGER_MODE_VIBRATE:
                 mBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
-                mBuilder.setLights(Color.RED, 3000, 3000);
+                mBuilder.setLights(Color.CYAN, 3000, 3000);
                 break;
             case AudioManager.RINGER_MODE_NORMAL:
                 mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                mBuilder.setLights(Color.RED, 3000, 3000);
+                mBuilder.setLights(Color.CYAN, 3000, 3000);
                 break;
         }
         
