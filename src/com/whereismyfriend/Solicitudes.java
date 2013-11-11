@@ -333,7 +333,7 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 						
 						Toast.makeText(getApplicationContext(),"Rechazo solicitud correctamente", Toast.LENGTH_LONG).show();
 
-						//new consumidorPost().execute();	
+						new consumidorPost().execute();	
 						
 						
 					}
