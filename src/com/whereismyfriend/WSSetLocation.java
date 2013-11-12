@@ -43,11 +43,11 @@ public class WSSetLocation {
 	    	//Timeout
 	    	HttpParams httpParameters = new BasicHttpParams();
 	    	// Set the timeout in milliseconds until a connection is established.
-	    	int timeoutConnection = 10000;
+	    	int timeoutConnection = Integer.parseInt(prop.getProperty("connectiontimeout"));
 	    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
 	    	// Set the default socket timeout (SO_TIMEOUT) 
 	    	// in milliseconds which is the timeout for waiting for data.
-	    	int timeoutSocket = 10000;
+	    	int timeoutSocket = Integer.parseInt(prop.getProperty("connectiontimeout"));
 	    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 
 	    	DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);

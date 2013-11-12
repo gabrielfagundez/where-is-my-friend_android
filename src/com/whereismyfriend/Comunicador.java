@@ -15,7 +15,11 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,9 +48,9 @@ public class Comunicador {
 			prop.load(getClass().getResourceAsStream("server.properties"));
 			String server = prop.getProperty("loginwhere");
 		    // Create a new HttpClient and Post Header
-		    HttpClient httpclient = new DefaultHttpClient();
 		    HttpPost httppost = new HttpPost(server);
 			
+		    
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
 	        nameValuePairs.add(new BasicNameValuePair("Mail", user));
@@ -55,8 +59,21 @@ public class Comunicador {
 	        nameValuePairs.add(new BasicNameValuePair("DeviceId", deviceid));
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+	        
+	        //Timeout
+	    	HttpParams httpParameters = new BasicHttpParams();
+	    	// Set the timeout in milliseconds until a connection is established.
+	    	int timeoutConnection = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+	    	// Set the default socket timeout (SO_TIMEOUT) 
+	    	// in milliseconds which is the timeout for waiting for data.
+	    	int timeoutSocket = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+	        
 	        // Execute HTTP Post Request
-	        HttpResponse response = httpclient.execute(httppost);
+	        DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
+	    	BasicHttpResponse response = (BasicHttpResponse)  httpClient.execute(httppost);
+	    	
 	        //Obtengo el codigo de la respuesta http
 	        int response_code = response.getStatusLine().getStatusCode();
 	        //Obtengo el nombre de usuario
@@ -103,10 +120,22 @@ public class Comunicador {
 			prop.load(getClass().getResourceAsStream("server.properties"));
 			String server = prop.getProperty("getallfriends");
 			  // Create a new HttpClient and Post Header
-		    HttpClient httpclient = new DefaultHttpClient();
+
 		    HttpGet httpGet = new HttpGet(server + id);
 		
-		HttpResponse response = httpclient.execute(httpGet);
+	        //Timeout
+	    	HttpParams httpParameters = new BasicHttpParams();
+	    	// Set the timeout in milliseconds until a connection is established.
+	    	int timeoutConnection = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+	    	// Set the default socket timeout (SO_TIMEOUT) 
+	    	// in milliseconds which is the timeout for waiting for data.
+	    	int timeoutSocket = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+	        
+	        // Execute HTTP Post Request
+	        DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
+	    	BasicHttpResponse response = (BasicHttpResponse)  httpClient.execute(httpGet);
 		
 		 //Obtengo el codigo de la respuesta http
         int response_code = response.getStatusLine().getStatusCode();
@@ -142,15 +171,26 @@ public class Comunicador {
 			prop.load(getClass().getResourceAsStream("server.properties"));
 			String server = prop.getProperty("logoutwhere");
 			// Create a new HttpClient and Post Header
-		    HttpClient httpclient = new DefaultHttpClient();
+
 		    HttpPost httppost = new HttpPost(server);
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 	        nameValuePairs.add(new BasicNameValuePair("Mail", user));
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+	        //Timeout
+	    	HttpParams httpParameters = new BasicHttpParams();
+	    	// Set the timeout in milliseconds until a connection is established.
+	    	int timeoutConnection = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+	    	// Set the default socket timeout (SO_TIMEOUT) 
+	    	// in milliseconds which is the timeout for waiting for data.
+	    	int timeoutSocket = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+	        
 	        // Execute HTTP Post Request
-	        HttpResponse response = httpclient.execute(httppost);
+	        DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
+	    	BasicHttpResponse response = (BasicHttpResponse)  httpClient.execute(httppost);
 	        //Obtengo el codigo de la respuesta http
 	        int response_code = response.getStatusLine().getStatusCode();
 	        //Obtengo el nombre de usuario
@@ -177,7 +217,6 @@ public class Comunicador {
 	    	Properties prop = new Properties();
 			prop.load(getClass().getResourceAsStream("server.properties"));
 			String server = prop.getProperty("solicitudsend");
-			HttpClient httpclient = new DefaultHttpClient();
 		    HttpPost httppost = new HttpPost(server);
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -185,8 +224,19 @@ public class Comunicador {
 	        nameValuePairs.add(new BasicNameValuePair("IdTo", friendid));
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+	        //Timeout
+	    	HttpParams httpParameters = new BasicHttpParams();
+	    	// Set the timeout in milliseconds until a connection is established.
+	    	int timeoutConnection = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+	    	// Set the default socket timeout (SO_TIMEOUT) 
+	    	// in milliseconds which is the timeout for waiting for data.
+	    	int timeoutSocket = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+	        
 	        // Execute HTTP Post Request
-	        HttpResponse response = httpclient.execute(httppost);
+	        DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
+	    	BasicHttpResponse response = (BasicHttpResponse)  httpClient.execute(httppost);
 	      
 	        //Obtengo el codigo de la respuesta http
 	        int response_code = response.getStatusLine().getStatusCode();
@@ -233,10 +283,22 @@ public class Comunicador {
 			Properties prop = new Properties();
 			prop.load(getClass().getResourceAsStream("server.properties"));
 			String server = prop.getProperty("lastfriendlocation");
-			  HttpClient httpclient = new DefaultHttpClient();
+			
 			    HttpGet httpGet = new HttpGet(server + userid);
 		
-			HttpResponse response = httpclient.execute(httpGet);
+		        //Timeout
+		    	HttpParams httpParameters = new BasicHttpParams();
+		    	// Set the timeout in milliseconds until a connection is established.
+		    	int timeoutConnection = Integer.parseInt(prop.getProperty("connectiontimeout"));
+		    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+		    	// Set the default socket timeout (SO_TIMEOUT) 
+		    	// in milliseconds which is the timeout for waiting for data.
+		    	int timeoutSocket = Integer.parseInt(prop.getProperty("connectiontimeout"));
+		    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+		        
+		        // Execute HTTP Post Request
+		        DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
+		    	BasicHttpResponse response = (BasicHttpResponse)  httpClient.execute(httpGet);
 			
 			 //Obtengo el codigo de la respuesta http
 	       int response_code = response.getStatusLine().getStatusCode();
@@ -276,7 +338,6 @@ public class Comunicador {
 			Properties prop1 = new Properties();
 			prop1.load(getClass().getResourceAsStream("server.properties"));
 			String server1 = prop1.getProperty("resetbadge");
-			HttpClient httpclient1 = new DefaultHttpClient();
 		    HttpPost httppost1 = new HttpPost(server1);
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -284,8 +345,20 @@ public class Comunicador {
 	        httppost1.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 	        // Execute HTTP Post Request
-	        HttpResponse response1 = httpclient1.execute(httppost1);
-			if (response1.getStatusLine().getStatusCode()!=200)
+	        //Timeout
+	    	HttpParams httpParameters1 = new BasicHttpParams();
+	    	// Set the timeout in milliseconds until a connection is established.
+	    	int timeoutConnection1 = Integer.parseInt(prop1.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setConnectionTimeout(httpParameters1, timeoutConnection1);
+	    	// Set the default socket timeout (SO_TIMEOUT) 
+	    	// in milliseconds which is the timeout for waiting for data.
+	    	int timeoutSocket1 = Integer.parseInt(prop1.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setSoTimeout(httpParameters1, timeoutSocket1);
+	        
+	        // Execute HTTP Post Request
+	        DefaultHttpClient httpClient1 = new DefaultHttpClient(httpParameters1);
+	    	BasicHttpResponse response1 = (BasicHttpResponse)  httpClient1.execute(httppost1);
+	    	if (response1.getStatusLine().getStatusCode()!=200)
 				throw  new ClientProtocolException();
 			else {
 					
@@ -293,11 +366,21 @@ public class Comunicador {
 				prop.load(getClass().getResourceAsStream("server.properties"));
 				String server = prop.getProperty("getallsolicitudes");
 				 // Create a new HttpClient and Post Header
-			    HttpClient httpclient = new DefaultHttpClient();
 			    HttpGet httpGet = new HttpGet(server + id);
 				
-				HttpResponse response = httpclient.execute(httpGet);
-				
+		        //Timeout
+		    	HttpParams httpParameters = new BasicHttpParams();
+		    	// Set the timeout in milliseconds until a connection is established.
+		    	int timeoutConnection = Integer.parseInt(prop.getProperty("connectiontimeout"));
+		    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+		    	// Set the default socket timeout (SO_TIMEOUT) 
+		    	// in milliseconds which is the timeout for waiting for data.
+		    	int timeoutSocket = Integer.parseInt(prop.getProperty("connectiontimeout"));
+		    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+		        
+		        // Execute HTTP Post Request
+		        DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
+		    	BasicHttpResponse response = (BasicHttpResponse)  httpClient.execute(httpGet);				
 				 //Obtengo el codigo de la respuesta http
 		        int response_code = response.getStatusLine().getStatusCode();
 		        result[0] = Integer.toString(response_code);
@@ -333,7 +416,6 @@ public String[] aceptarSolicitud(String userid, String friendid){
 			prop.load(getClass().getResourceAsStream("server.properties"));
 			String server = prop.getProperty("acceptsolicitudes");
 			// Create a new HttpClient and Post Header
-		    HttpClient httpclient = new DefaultHttpClient();
 		    HttpPost httppost = new HttpPost(server);
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -341,9 +423,19 @@ public String[] aceptarSolicitud(String userid, String friendid){
 	        nameValuePairs.add(new BasicNameValuePair("IdSolicitud", friendid));
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+	        //Timeout
+	    	HttpParams httpParameters = new BasicHttpParams();
+	    	// Set the timeout in milliseconds until a connection is established.
+	    	int timeoutConnection = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+	    	// Set the default socket timeout (SO_TIMEOUT) 
+	    	// in milliseconds which is the timeout for waiting for data.
+	    	int timeoutSocket = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+	        
 	        // Execute HTTP Post Request
-	        HttpResponse response = httpclient.execute(httppost);
-	      
+	        DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
+	    	BasicHttpResponse response = (BasicHttpResponse)  httpClient.execute(httppost);	      
 	        //Obtengo el codigo de la respuesta http
 	        int response_code = response.getStatusLine().getStatusCode();
 	        result[0] = Integer.toString(response_code);
@@ -386,7 +478,6 @@ public String[] aceptarSolicitud(String userid, String friendid){
 			prop.load(getClass().getResourceAsStream("server.properties"));
 			String server = prop.getProperty("rejectsolicitudes");
 			// Create a new HttpClient and Post Header
-		    HttpClient httpclient = new DefaultHttpClient();
 		    HttpPost httppost = new HttpPost(server);
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -394,10 +485,21 @@ public String[] aceptarSolicitud(String userid, String friendid){
 	        nameValuePairs.add(new BasicNameValuePair("IdSolicitud", friendid));
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+	        //Timeout
+	    	HttpParams httpParameters = new BasicHttpParams();
+	    	// Set the timeout in milliseconds until a connection is established.
+	    	int timeoutConnection = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+	    	// Set the default socket timeout (SO_TIMEOUT) 
+	    	// in milliseconds which is the timeout for waiting for data.
+	    	int timeoutSocket = Integer.parseInt(prop.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+	        
 	        // Execute HTTP Post Request
-	        HttpResponse response = httpclient.execute(httppost);
-	      
-	        //Obtengo el codigo de la respuesta http
+	        DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
+	    	BasicHttpResponse response = (BasicHttpResponse)  httpClient.execute(httppost);
+	    	
+	    	//Obtengo el codigo de la respuesta http
 	        int response_code = response.getStatusLine().getStatusCode();
 	        result[0] = Integer.toString(response_code);
 	        
