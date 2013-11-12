@@ -255,14 +255,17 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 		alertDialog.setButton(getString(R.string.aceptar), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 			// here you can add functions
-					
+				ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+		        pbar.setVisibility(pbar.VISIBLE);	
 				new consumidorPostAceptarSolicitud().execute();
+			
 			}
 		});
 		alertDialog.setButton2(getString(R.string.rechazar), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 			// here you can add functions
-					
+				ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+		        pbar.setVisibility(pbar.VISIBLE);	
 				new consumidorPostRechazarSolicitud().execute();
 
 			}
@@ -290,7 +293,8 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 					if (codigo_res==200){
 						
 						Toast.makeText(getApplicationContext(),R.string.acepto_solicitud, Toast.LENGTH_LONG).show();
-
+						pbar = (ProgressBar) findViewById(R.id.progressBar1);
+				        pbar.setVisibility(pbar.VISIBLE);
 						new consumidorPost().execute();
 						
 
@@ -332,7 +336,8 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 					if (codigo_res==200){
 						
 						Toast.makeText(getApplicationContext(),R.string.rechazo_solicitud, Toast.LENGTH_LONG).show();
-
+						pbar = (ProgressBar) findViewById(R.id.progressBar1);
+				        pbar.setVisibility(pbar.VISIBLE);
 						new consumidorPost().execute();	
 						
 						
