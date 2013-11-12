@@ -119,6 +119,7 @@ public class MainActivity extends Activity {
 					intent_name.putExtra("name", user_name);
 					intent_name.putExtra("id", user_id);
 					startActivity(intent_name);
+					finish();
 				}
 				else if (codigo_res==404) {
 					//USUARIO NO ENCONTRADO

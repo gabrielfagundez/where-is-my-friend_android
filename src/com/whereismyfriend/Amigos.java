@@ -301,8 +301,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		// TODO Auto-generated method stub
 		ListItem item =  (ListItem) l.getItemAtPosition(position);
 	    this.IdTo = item.getId();
-	    ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
-	    pbar.setVisibility(l.VISIBLE);
+
 	    
 	    final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		alertDialog.setTitle(getString(R.string.solicitud_titulo));
