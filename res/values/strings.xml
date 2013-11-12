@@ -32,5 +32,9 @@
     <string name="connecting_to_server" > Connecting to server, please wait. </string>
     <string name="tryagain" > Try again </string>
     <string name="no_push_server" > No connection to the server. Please try again. </string>
-    
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="mando_solicitud_correctamente">Request succesfully sent</string>
+    <string name="acepto_solicitud">Request accepted</string>
+    <string name="rechazo_solicitud">Request rejected</string>
 </resources>

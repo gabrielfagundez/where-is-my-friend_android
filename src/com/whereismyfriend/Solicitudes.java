@@ -203,10 +203,10 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 						
 					}
 					else if (codigo_res==404) {
-						Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),R.string.user_not_found, Toast.LENGTH_LONG).show();
 					}
 					else if (codigo_res==401){
-						Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),R.string.invalid_password, Toast.LENGTH_LONG).show();
 					}
 					else{
 						//OTRO TIPO DE ERROR
@@ -289,7 +289,7 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			        int codigo_res = Integer.parseInt(result[0]);
 					if (codigo_res==200){
 						
-						Toast.makeText(getApplicationContext(),"Acepto solicitud correctamente", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),R.string.acepto_solicitud, Toast.LENGTH_LONG).show();
 
 						new consumidorPost().execute();
 						
@@ -298,10 +298,10 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 						
 					}
 					else if (codigo_res==404) {
-						Toast.makeText(getApplicationContext(),"Error404", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),R.string.user_not_found, Toast.LENGTH_LONG).show();
 					}
 					else if (codigo_res==401){
-						Toast.makeText(getApplicationContext(),"Error401", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),R.string.invalid_password, Toast.LENGTH_LONG).show();
 					}
 					else{
 						//OTRO TIPO DE ERROR
@@ -331,17 +331,17 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			        int codigo_res = Integer.parseInt(result[0]);
 					if (codigo_res==200){
 						
-						Toast.makeText(getApplicationContext(),"Rechazo solicitud correctamente", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),R.string.rechazo_solicitud, Toast.LENGTH_LONG).show();
 
 						new consumidorPost().execute();	
 						
 						
 					}
 					else if (codigo_res==404) {
-						Toast.makeText(getApplicationContext(),"Error404", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),R.string.user_not_found, Toast.LENGTH_LONG).show();
 					}
 					else if (codigo_res==401){
-						Toast.makeText(getApplicationContext(),"Error401", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),R.string.invalid_password, Toast.LENGTH_LONG).show();
 					}
 					else{
 						//OTRO TIPO DE ERROR

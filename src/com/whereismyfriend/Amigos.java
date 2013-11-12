@@ -136,10 +136,10 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 					
 				}
 				else if (codigo_res==404) {
-					Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),R.string.user_not_found, Toast.LENGTH_LONG).show();
 				}
 				else if (codigo_res==401){
-					Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),R.string.invalid_password, Toast.LENGTH_LONG).show();
 				}
 				else{
 					//OTRO TIPO DE ERROR
@@ -254,7 +254,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		        int codigo_res = Integer.parseInt(result[0]);
 				if (codigo_res==200){
 					
-					Toast.makeText(getApplicationContext(),"Mando solicitud correctamente"+result[1], Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),R.string.mando_solicitud_correctamente, Toast.LENGTH_LONG).show();
 
 					new consumidorPost().execute();
 
@@ -262,10 +262,10 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 					
 				}
 				else if (codigo_res==404) {
-					Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),R.string.user_not_found, Toast.LENGTH_LONG).show();
 				}
 				else if (codigo_res==401){
-					Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),R.string.invalid_password, Toast.LENGTH_LONG).show();
 				}
 				else{
 					//OTRO TIPO DE ERROR
@@ -307,14 +307,14 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	    final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		alertDialog.setTitle(getString(R.string.solicitud_titulo));
 		alertDialog.setMessage(getString(R.string.enviar_solicitud) + " " + item.getName() );
-		alertDialog.setButton(getString(R.string.aceptar), new DialogInterface.OnClickListener() {
+		alertDialog.setButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 			// here you can add functions
 					
 			    new consumidorPostSolicitud().execute();
 			}
 		});
-		alertDialog.setButton2(getString(R.string.rechazar), new DialogInterface.OnClickListener() {
+		alertDialog.setButton2(getString(R.string.no), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 			// here you can add functions
 					

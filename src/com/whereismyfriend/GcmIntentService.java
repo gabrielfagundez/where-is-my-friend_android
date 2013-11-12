@@ -89,7 +89,7 @@ public class GcmIntentService extends IntentService {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
         .setSmallIcon(R.drawable.ic_stat_gcm)
-        .setContentTitle("Where is my friend?")
+        .setContentTitle(getResources().getString(R.string.app_name))
         .setStyle(new NotificationCompat.BigTextStyle()
         .bigText(msg))
         .setContentText(msg).setAutoCancel(true);
