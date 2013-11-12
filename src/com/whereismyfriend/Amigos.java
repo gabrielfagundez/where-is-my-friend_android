@@ -310,7 +310,8 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		alertDialog.setButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 			// here you can add functions
-					
+				ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+		        pbar.setVisibility(pbar.VISIBLE);	
 			    new consumidorPostSolicitud().execute();
 			}
 		});
