@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" >Where is my friend?</string>
+    <string name="action_settings" >Opciones</string>
+    <string name="hello_world" >Hello world!</string>
+    <string name="login" >Iniciar sesión</string>
+    <string name="Mail" >Mail</string>
+    <string name="Password" >Contraseña</string>
+    <string name="blank_fields" >Por favor complete todos los campos.</string>
+    <string name="user_not_found" >Usuario no encontrado</string>
+    <string name="connection_error" >Error en la conexión</string>
+    <string name="invalid_password" >Contraseña inválida</string>
+    <string name="logout" >Cerrar sesión</string>
+    <string name="settings" >Opciones</string>
+	<string name="requestsbar" >Solicitudes</string>
+    <string name="settingsbar" >Opciones</string>
+    <string name="mapbar" >Mapa</string>
+    <string name="friendsbar">Amigos</string>
+    <string name="confirm_logout">¿Estás seguro que deseas cerrar sesión?</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="aceptar" >Aceptar</string>
+    <string name="rechazar" >Rechazar</string>
+    <string name="solicitud" >Deseas aceptar la solicitud de</string>
+    <string name="solicitud_titulo" >¿Aceptar o rechazar?</string>
+    <string name="enviar_solicitud" >Deseas enviar una solicitud a</string>
+    <string name="no_amigos" >Sin amigos para mostrar.</string>
+    <string name="no_solicitudes" >Sin solicitudes para mostrar.</string>
+    <string name="push_no_leidas_1" >Tienes </string>
+    <string name="push_no_leidas_2" > nuevas solicitudes pendientes. </string>
+    <string name="connecting_to_server" > Conectando al servidor para recibir actualizaciones. Por favor espere. </string>
+    <string name="tryagain" > Intenta nuevamente </string>
+    <string name="no_push_server" > Sin conexión al servidor. Por favor intenta nuevamente. </string>
+    <string name="mando_solicitud_correctamente">Solicitud enviada con éxito</string>
+    <string name="acepto_solicitud">Solicitud aceptada</string>
+    <string name="rechazo_solicitud">Solicitud rechazada</string>
+</resources>
