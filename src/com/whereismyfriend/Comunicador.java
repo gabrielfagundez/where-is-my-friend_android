@@ -35,7 +35,7 @@ public class Comunicador {
 	
 	
 	
-	public String[] postLogin(String user, String pass, String deviceid) {
+	public String[] postLogin(String user, String pass, String deviceid, String language) {
 		
 		String res_id="";
 		String res_name="";
@@ -57,6 +57,7 @@ public class Comunicador {
 	        nameValuePairs.add(new BasicNameValuePair("Password", pass));
 	        nameValuePairs.add(new BasicNameValuePair("Platform", "android"));
 	        nameValuePairs.add(new BasicNameValuePair("DeviceId", deviceid));
+	        nameValuePairs.add(new BasicNameValuePair("Language", language));
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 	        

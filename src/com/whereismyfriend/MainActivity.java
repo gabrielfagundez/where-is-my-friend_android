@@ -4,24 +4,21 @@
 
 
 
-import java.util.concurrent.ExecutionException;
+import java.util.Locale;
 
-import android.media.AudioManager;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.media.AudioManager;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -69,7 +66,13 @@ public class MainActivity extends Activity {
 	    }
 	    else{
 	    	//Hago la llamada al server
-	    	String [] parametros = {mail_str,password_str, deviceid};
+	    	String idioma= Locale.getDefault().getLanguage();
+	    	if (idioma.compareTo("es")==0)
+	    		idioma= "esp";
+	    	else
+	    		idioma="eng";
+	    	
+	    	String [] parametros = {mail_str,password_str, deviceid, idioma};
 	    	pbar.setVisibility(view.VISIBLE);
 	    	//setProgressBarIndeterminateVisibility(true);
 	    	
@@ -83,7 +86,7 @@ public class MainActivity extends Activity {
 		protected String[] doInBackground(String[]... arg0) {
 			// TODO Auto-generated method stub
 			Comunicador com= new Comunicador();
-			String[] res= com.postLogin(arg0[0][0], arg0[0][1], arg0[0][2]);
+			String[] res= com.postLogin(arg0[0][0], arg0[0][1], arg0[0][2], arg0[0][3]);
 			return res;
 		}
 		
