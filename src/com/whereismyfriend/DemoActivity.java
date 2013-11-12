@@ -29,7 +29,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -60,12 +63,18 @@ public class DemoActivity extends Activity {
     Context context;
 
     String regid;
+    TextView text;
+    Button tryagain;
+    ProgressBar pbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.main_push);
+        text = (TextView)findViewById(R.id.textView1);
+        tryagain= (Button) findViewById(R.id.button1);
+        pbar = (ProgressBar) findViewById(R.id.progressBar1);
+       
 
 
         context = getApplicationContext();
@@ -76,6 +85,7 @@ public class DemoActivity extends Activity {
             regid = getRegistrationId(context);
 
            if (regid.isEmpty()) {
+        	   	pbar.setVisibility(pbar.VISIBLE);
                 registerInBackground();
            }
            else{
@@ -202,11 +212,18 @@ public class DemoActivity extends Activity {
 
             @Override
             protected void onPostExecute(String msg) {
-            	Intent intent_name = new Intent();
-				intent_name.setClass(getApplicationContext(),MainActivity.class);
-				intent_name.putExtra("deviceid", msg);
-				startActivity(intent_name);
-				finish();
+            	if (msg.contains("Error :")){
+            		text.setText(getResources().getString(R.string.no_push_server));
+            		tryagain.setVisibility(Button.VISIBLE);
+            		pbar.setVisibility(pbar.INVISIBLE);
+            	}	
+            	else{
+	            	Intent intent_name = new Intent();
+					intent_name.setClass(getApplicationContext(),MainActivity.class);
+					intent_name.putExtra("deviceid", msg);
+					startActivity(intent_name);
+					finish();
+            	}
             }
         }.execute(null, null, null);
     }
@@ -248,5 +265,13 @@ public class DemoActivity extends Activity {
      */
     private void sendRegistrationIdToBackend() {
       // Your implementation here.
+    }
+    
+    
+    public void tryagain (View view){
+    	pbar.setVisibility(pbar.VISIBLE);
+    	text.setText(getResources().getString(R.string.connecting_to_server));
+    	tryagain.setVisibility(Button.INVISIBLE);
+    	registerInBackground();
     }
 }
