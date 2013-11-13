@@ -16,17 +16,23 @@
 
 package com.whereismyfriend;
 
+import java.util.List;
+
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -63,8 +69,24 @@ public class GcmIntentService extends IntentService {
              */
         	if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // Post notification of received message.
-        		if (extras.getString("alert")!=null)
-        			sendNotification(extras.getString("alert"), extras.getString("badge"));
+        		
+        		//Si la app esta corriendo
+        		boolean corriendo=false;
+        		if (WMFApplication.app_is_visible==1)
+        			corriendo=true;
+        		if (extras.getString("alert")!=null){
+        			SharedPreferences pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);
+        			boolean logueado = pref.getBoolean("log_in", false);
+        			if (!corriendo || !logueado)
+        				sendNotification(extras.getString("alert"), extras.getString("badge"));
+        			else{
+        				 synchronized (this) 
+        				  {
+        				    startActivity(new Intent(this,DialogPush.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("alert", extras.getString("alert")).putExtra("badge", extras.getString("badge")));
+        				  }
+        			}
+        			
+        		}
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }

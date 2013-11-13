@@ -35,4 +35,5 @@
     <string name="mando_solicitud_correctamente">Solicitud enviada con éxito</string>
     <string name="acepto_solicitud">Solicitud aceptada</string>
     <string name="rechazo_solicitud">Solicitud rechazada</string>
+    <string name="title_activity_dialog_push">Where is my friend?</string>
 </resources>

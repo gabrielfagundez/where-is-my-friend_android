@@ -41,6 +41,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        WMFApplication.app_is_visible=1;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.amigos);
 		
@@ -63,6 +64,29 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		list.setOnItemClickListener(this);
 	}
 	
+	
+	@Override
+	public void onResume (){
+        WMFApplication.app_is_visible=1;
+        super.onResume();
+	}
+	
+	@Override
+	public void onStart (){
+        WMFApplication.app_is_visible=1;
+        super.onStart();
+	}
+	
+	@Override
+	public void onStop (){
+        WMFApplication.app_is_visible=0;
+        super.onStop();
+	}
+	@Override
+	public void onPause (){
+        WMFApplication.app_is_visible=0;
+        super.onPause();
+	}
 	
 	
     private class consumidorPost extends AsyncTask<String[], Void, String[]>{

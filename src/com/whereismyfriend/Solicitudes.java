@@ -40,6 +40,8 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        WMFApplication.app_is_visible=1;
+
 		setContentView(R.layout.solicitudes);
 		
 		context = getApplicationContext();
@@ -50,6 +52,29 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 		list.setOnItemClickListener(this);
 		new consumidorPost().execute();
 
+	}
+	
+	@Override
+	public void onResume (){
+        WMFApplication.app_is_visible=1;
+        super.onResume();
+	}
+	
+	@Override
+	public void onStart (){
+        WMFApplication.app_is_visible=1;
+        super.onStart();
+	}
+	
+	@Override
+	public void onStop (){
+        WMFApplication.app_is_visible=0;
+        super.onStop();
+	}
+	@Override
+	public void onPause (){
+        WMFApplication.app_is_visible=0;
+        super.onPause();
 	}
 	
 	

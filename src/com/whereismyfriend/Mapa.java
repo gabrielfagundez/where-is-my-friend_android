@@ -83,6 +83,7 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		 WMFApplication.app_is_visible=1;
 		setContentView(R.layout.mapa);
 		Mapa.context = getApplicationContext();
 		activ = this;
@@ -173,6 +174,30 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 
         super.onDestroy();
     }
+	
+	
+	@Override
+	public void onResume (){
+        WMFApplication.app_is_visible=1;
+        super.onResume();
+	}
+	
+	@Override
+	public void onStart (){
+        WMFApplication.app_is_visible=1;
+        super.onStart();
+	}
+	
+	@Override
+	public void onStop (){
+        WMFApplication.app_is_visible=0;
+        super.onStop();
+	}
+	@Override
+	public void onPause (){
+        WMFApplication.app_is_visible=0;
+        super.onPause();
+	}
 	
 	@Override
     public void onLocationChanged(Location location) {

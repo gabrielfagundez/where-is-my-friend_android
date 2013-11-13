@@ -6,6 +6,8 @@ import android.app.Application;
 import android.util.Log;
 
 public class WMFApplication extends Application {
+   
+	public static int app_is_visible=0;
 
     @Override
     public void onCreate() {
