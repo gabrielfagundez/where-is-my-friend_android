@@ -248,14 +248,14 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 		Intent intent_name = new Intent();
 		intent_name.setClass(getApplicationContext(), Amigos.class);
 		startActivity(intent_name);
-		finish();
+		this.finish();
 	}
 	
 	public void requests (View view){
 		Intent intent_name = new Intent();
 		intent_name.setClass(getApplicationContext(), Solicitudes.class);
 		startActivity(intent_name);
-		finish();
+		this.finish();
 	}
 	
 	public void logout(View view) {

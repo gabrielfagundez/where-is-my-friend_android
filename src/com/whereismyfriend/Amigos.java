@@ -104,7 +104,10 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.INVISIBLE);
 		        ListView list = (ListView) findViewById(R.id.list);
+		        list.setVisibility(View.VISIBLE);
+		        
 		        TextView text = (TextView) findViewById(R.id.textView2);
+		        text.setVisibility(View.INVISIBLE);
 
 		        
 		        int codigo_res = Integer.parseInt(result[0]);
@@ -122,6 +125,9 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 						
 						if (jsonA.length() == 0){
 							text.setText(getString(R.string.no_amigos));
+							text.setVisibility(View.VISIBLE);
+							list.setVisibility(View.INVISIBLE);
+							list.setVisibility(View.GONE);
 						}
 						
 						for (int i = 0; i < jsonA.length(); i++) {
@@ -188,6 +194,13 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		intent_name.setClass(getApplicationContext(), Solicitudes.class);
 		startActivity(intent_name);
 		this.finish();
+	}
+	
+	public void actualizar(View view) {
+		//RUTINA AL APRETAR EL BOTON DE actualizar
+		ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+		pbar.setVisibility(View.VISIBLE);
+		new consumidorPost().execute();
 	}
 	
 	public void logout(View view) {
