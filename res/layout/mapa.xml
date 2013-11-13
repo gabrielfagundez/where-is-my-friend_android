@@ -21,7 +21,7 @@
             android:text="@string/mapbar"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#FFFFFF" />
-        
+
         <ProgressBar
             android:id="@+id/progressBar1"
             style="?android:attr/progressBarStyle"
@@ -43,37 +43,49 @@
             android:padding="5dp"
             android:scaleType="fitStart"
             android:src="@drawable/logout" />
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/button1"
+        <ImageButton
+            android:id="@+id/ImageButton1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="-5dp"
+            android:layout_marginLeft="-3dp"
+            android:layout_marginRight="-4dp"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
             android:clickable="false"
-            android:text="@string/mapbar"
-            android:textColor="@color/grisclarotexto" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/mapa" />
 
-        <Button
-            android:id="@+id/button2"
+        <ImageButton
+            android:id="@+id/ImageButton1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="-5dp"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-4dp"
             android:layout_weight="1"
             android:onClick="amigos"
-            android:text="@string/friendsbar" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/amigos" />
 
-        <Button
-            android:id="@+id/button3"
+        <ImageButton
+            android:id="@+id/ImageButton1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="-5dp"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-3dp"
             android:layout_weight="1"
             android:onClick="requests"
-            android:text="@string/requestsbar" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/solicitud" />
+
     </LinearLayout>
 
     <LinearLayout

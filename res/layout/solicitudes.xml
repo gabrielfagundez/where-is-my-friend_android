@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="top"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -34,6 +34,16 @@
             android:minWidth="30dip" />
 
         <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:onClick="actualizar"
+            android:padding="5dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/redo" />
+
+        <ImageButton
             android:id="@+id/imageButton1"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -42,37 +52,45 @@
             android:padding="5dp"
             android:scaleType="fitStart"
             android:src="@drawable/logout" />
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/button1"
+        <ImageButton
+            android:id="@+id/ImageButton1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="-3dp"
+            android:layout_marginRight="-4dp"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
             android:onClick="mapa"
-            android:text="Mapa" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/mapa" />
 
-        <Button
-            android:id="@+id/button2"
+        <ImageButton
+            android:id="@+id/ImageButton1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-4dp"
             android:layout_weight="1"
             android:onClick="amigos"
-            android:text="Amigos" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/amigos" />
 
-        <Button
-            android:id="@+id/button3"
+        <ImageButton
+            android:id="@+id/ImageButton1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-3dp"
             android:layout_weight="1"
             android:clickable="false"
-            android:text="Requests"
-            android:textColor="@color/grisclarotexto" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/solicitud" />
 
     </LinearLayout>
 
