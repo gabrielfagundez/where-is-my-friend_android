@@ -4,6 +4,8 @@ package com.whereismyfriend;
 
 
 
+import java.util.concurrent.ExecutionException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +13,6 @@ import org.json.JSONTokener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,15 +21,11 @@ import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -340,33 +337,50 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	    }
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 		// TODO Auto-generated method stub
 		ListItem item =  (ListItem) l.getItemAtPosition(position);
 	    this.IdTo = item.getId();
+	    
+	    ManejadorAmigos manejador = ManejadorAmigos.getInstance();
 
+		
+		try {
+			manejador.actualizarPosiciones();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    boolean mande = manejador.yaEstaEnVisibles(IdTo);
 	    
-	    final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-		alertDialog.setTitle(getString(R.string.solicitud_titulo));
-		alertDialog.setMessage(getString(R.string.enviar_solicitud) + " " + item.getName() );
-		alertDialog.setButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-			// here you can add functions
-				ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
-		        pbar.setVisibility(pbar.VISIBLE);	
-			    new consumidorPostSolicitud().execute();
-			}
-		});
-		alertDialog.setButton2(getString(R.string.no), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-			// here you can add functions
-					
-			}
-		});
-		alertDialog.setIcon(R.drawable.contacto);
-		alertDialog.show();	
-	    
+	    if (mande){
+	    	Toast.makeText(getApplicationContext(), R.string.solicitud_ya_enviada, Toast.LENGTH_LONG).show();
+	    }else{
+		    final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			alertDialog.setTitle(getString(R.string.solicitud_titulo));
+			alertDialog.setMessage(getString(R.string.enviar_solicitud) + " " + item.getName() );
+			alertDialog.setButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+				// here you can add functions
+					ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+			        pbar.setVisibility(pbar.VISIBLE);	
+				    new consumidorPostSolicitud().execute();
+				}
+			});
+			alertDialog.setButton2(getString(R.string.no), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+				// here you can add functions
+						
+				}
+			});
+			alertDialog.setIcon(R.drawable.contacto);
+			alertDialog.show();	
+	    }
 	}
 	
 	

@@ -2,6 +2,7 @@ package com.whereismyfriend;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -9,6 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -76,7 +80,16 @@ public class ManejadorAmigos {
 		this.sharedPrefs = sharedPrefs;
 	}
 	
-	
+	public boolean yaEstaEnVisibles(String id){
+		Iterator<Amigo> it = amigosVisibles.iterator();
+        while(it.hasNext())
+        {
+            Amigo am = it.next();
+            if (am.getId() == id)
+            	return true;
+        }
+		return false;
+	}
 	
 
 	public void actualizarPosiciones() throws InterruptedException, ExecutionException{
@@ -100,10 +113,12 @@ public class ManejadorAmigos {
 					
 					JSONTokener jsonT = new JSONTokener(res[1]);
 				 	JSONArray jsonA = new JSONArray(jsonT);
+				 	ManejadorAmigos m = ManejadorAmigos.getInstance();
 				 	
 					for (int i = 0; i < jsonA.length(); i++) {
 						JSONObject jsonO = jsonA.getJSONObject(i);
-					 	Amigo amigo = new Amigo("NAME",jsonO.get("Mail").toString(),"ID");
+						Amigo a = m.getAmigoByMail(jsonO.get("Mail").toString());
+					 	Amigo amigo = new Amigo(a.getName(),jsonO.get("Mail").toString(),a.getId());
 						amigo.setLat(Double.parseDouble(jsonO.get("Latitude").toString()));
 						amigo.setLon(Double.parseDouble(jsonO.get("Longitude").toString()));
 					 	amigos.add(amigo);

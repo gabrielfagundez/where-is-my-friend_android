@@ -38,5 +38,6 @@
     <string name="title_activity_dialog_push">New notification!</string>
     <string name="yes_dialog_push">Check now</string>
     <string name="no_dialog_push">Later</string>
+    <string name="solicitud_ya_enviada">Request already sent</string>
     
 </resources>
