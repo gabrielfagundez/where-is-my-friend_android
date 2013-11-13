@@ -38,11 +38,19 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	public static Activity activ;
 	private static Context context;
 	private String IdTo; 
+	public static int isfront;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-        WMFApplication.app_is_visible=1;
+        
 		super.onCreate(savedInstanceState);
+		if (Solicitudes.activ!=null)
+			Solicitudes.activ.finish();
+		if (Mapa.activ!=null)
+			Mapa.activ.finish();
+		if (Amigos.activ!=null)
+			Amigos.activ.finish();
+		isfront=1;
 		setContentView(R.layout.amigos);
 		
 		ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
@@ -67,27 +75,26 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	
 	@Override
 	public void onResume (){
-        WMFApplication.app_is_visible=1;
+        isfront=1;
         super.onResume();
 	}
 	
 	@Override
 	public void onStart (){
-        WMFApplication.app_is_visible=1;
+        isfront=1;
         super.onStart();
 	}
 	
 	@Override
 	public void onStop (){
-        WMFApplication.app_is_visible=0;
+        isfront=0;
         super.onStop();
 	}
 	@Override
 	public void onPause (){
-        WMFApplication.app_is_visible=0;
+        isfront=0;
         super.onPause();
 	}
-	
 	
     private class consumidorPost extends AsyncTask<String[], Void, String[]>{
 		protected String[] doInBackground(String[]... arg0) {
@@ -185,7 +192,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		Intent intent_name = new Intent();
 		intent_name.setClass(getApplicationContext(), Mapa.class);
 		startActivity(intent_name);
-		this.finish();
+		
 	}
 	
 	public void requests(View view) {
@@ -193,7 +200,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		Intent intent_name = new Intent();
 		intent_name.setClass(getApplicationContext(), Solicitudes.class);
 		startActivity(intent_name);
-		this.finish();
+		
 	}
 	
 	public void actualizar(View view) {

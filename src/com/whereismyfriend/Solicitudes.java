@@ -35,15 +35,23 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 	public static Activity activ;
 	private static Context context;
 	public static String idSol;
+	public static int isfront=0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        WMFApplication.app_is_visible=1;
+		if (Solicitudes.activ!=null)
+			Solicitudes.activ.finish();
+		if (Mapa.activ!=null)
+			Mapa.activ.finish();
+		if (Amigos.activ!=null)
+			Amigos.activ.finish();
+        isfront=1;
 
 		setContentView(R.layout.solicitudes);
 		
 		context = getApplicationContext();
+		
 
 		activ = this;
 
@@ -55,27 +63,27 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 	
 	@Override
 	public void onResume (){
-        WMFApplication.app_is_visible=1;
+        isfront=1;
         super.onResume();
 	}
 	
 	@Override
 	public void onStart (){
-        WMFApplication.app_is_visible=1;
+        isfront=1;
         super.onStart();
 	}
 	
 	@Override
 	public void onStop (){
-        WMFApplication.app_is_visible=0;
+        isfront=0;
         super.onStop();
 	}
+
 	@Override
 	public void onPause (){
-        WMFApplication.app_is_visible=0;
+        isfront=0;
         super.onPause();
 	}
-	
 	
 	
 	public void mapa(View view) {
@@ -83,7 +91,7 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 		Intent intent_name = new Intent();
 		intent_name.setClass(getApplicationContext(), Mapa.class);
 		startActivity(intent_name);
-		this.finish();
+		
 	}
 	
 	public void amigos(View view) {
@@ -91,7 +99,7 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 		Intent intent_name = new Intent();
 		intent_name.setClass(getApplicationContext(), Amigos.class);
 		startActivity(intent_name);
-		this.finish();
+		
 	}
 	
 	public void actualizar(View view) {

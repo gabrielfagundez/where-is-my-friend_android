@@ -72,7 +72,11 @@ public class GcmIntentService extends IntentService {
         		
         		//Si la app esta corriendo
         		boolean corriendo=false;
-        		if (WMFApplication.app_is_visible==1)
+        		if (Amigos.activ!=null && Amigos.isfront==1)
+        			corriendo=true;
+        		if (Solicitudes.activ!=null && Solicitudes.isfront==1)
+        			corriendo=true;
+        		if (Mapa.activ!=null && Mapa.isfront==1)
         			corriendo=true;
         		if (extras.getString("alert")!=null){
         			SharedPreferences pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);

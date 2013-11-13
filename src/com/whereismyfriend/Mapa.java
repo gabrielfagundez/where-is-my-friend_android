@@ -37,6 +37,7 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
     GoogleMap googleMap;
 	private static Context context;
 	public static Activity activ;
+	public static int isfront=0;
 	
 	final int MARKER_UPDATE_INTERVAL = 10000; /* milliseconds */
     Handler handler = new Handler();
@@ -83,7 +84,13 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		 WMFApplication.app_is_visible=1;
+		if (Solicitudes.activ!=null)
+			Solicitudes.activ.finish();
+		if (Mapa.activ!=null)
+			Mapa.activ.finish();
+		if (Amigos.activ!=null)
+			Amigos.activ.finish();
+		isfront=1;
 		setContentView(R.layout.mapa);
 		Mapa.context = getApplicationContext();
 		activ = this;
@@ -178,26 +185,28 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 	
 	@Override
 	public void onResume (){
-        WMFApplication.app_is_visible=1;
+        isfront=1;
         super.onResume();
 	}
 	
 	@Override
 	public void onStart (){
-        WMFApplication.app_is_visible=1;
+        isfront=1;
         super.onStart();
 	}
 	
 	@Override
 	public void onStop (){
-        WMFApplication.app_is_visible=0;
+        isfront=0;
         super.onStop();
 	}
+	
 	@Override
 	public void onPause (){
-        WMFApplication.app_is_visible=0;
+        isfront=0;
         super.onPause();
 	}
+
 	
 	@Override
     public void onLocationChanged(Location location) {
@@ -248,14 +257,12 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 		Intent intent_name = new Intent();
 		intent_name.setClass(getApplicationContext(), Amigos.class);
 		startActivity(intent_name);
-		this.finish();
 	}
 	
 	public void requests (View view){
 		Intent intent_name = new Intent();
 		intent_name.setClass(getApplicationContext(), Solicitudes.class);
 		startActivity(intent_name);
-		this.finish();
 	}
 	
 	public void logout(View view) {
