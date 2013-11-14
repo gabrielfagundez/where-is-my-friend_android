@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,6 +34,11 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 	private static Context context;
 	public static String idSol;
 	public static int isfront=0;
+	ImageButton button1;
+	ImageButton button2;
+	ImageButton button3;
+	ImageButton button4;
+	ListView list;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +62,23 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 
 		activ = this;
 
-		ListView list = (ListView) findViewById(R.id.list);
+		list = (ListView) findViewById(R.id.list);
 		list.setOnItemClickListener(this);
+		
+		//Pido los botones para bloquearlos
+		button1= (ImageButton) findViewById(R.id.ImageButton3);
+		button2 = (ImageButton) findViewById(R.id.ImageButton4);
+		button3= (ImageButton) findViewById(R.id.imageButton1);
+		button4= (ImageButton) findViewById(R.id.imageButton2);
+		button1.setClickable(false);
+		button2.setClickable(false);
+		button3.setClickable(false);
+		button4.setClickable(false);
+		list.setClickable(false);
+		
+		
 		new consumidorPost().execute();
+		
 
 	}
 	
@@ -107,6 +127,11 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 		//RUTINA AL APRETAR EL BOTON DE actualizar
 		ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		pbar.setVisibility(View.VISIBLE);
+		button1.setClickable(false);
+		button2.setClickable(false);
+		button3.setClickable(false);
+		button4.setClickable(false);
+		list.setClickable(false);
 		new consumidorPost().execute();
 	}
 	
@@ -120,6 +145,11 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
             	ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
         		pbar.setVisibility(pbar.VISIBLE);
         		Comunicador com = new Comunicador();
+        		button1.setClickable(false);
+        		button2.setClickable(false);
+        		button3.setClickable(false);
+        		button4.setClickable(false);
+        		list.setClickable(false);
         		new consumidorPostLogout().execute();
 	            	
             }
@@ -147,6 +177,11 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 		       // setProgressBarIndeterminateVisibility(false);
 		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.INVISIBLE);
+				button1.setClickable(true);
+				button2.setClickable(true);
+				button3.setClickable(true);
+				button4.setClickable(true);
+				list.setClickable(true);
 		        
 		        int codigo_res = Integer.parseInt(result);
 				if (codigo_res==200){
@@ -191,6 +226,11 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			       // setProgressBarIndeterminateVisibility(false);
 			        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 			        pbar.setVisibility(pbar.INVISIBLE);
+					button1.setClickable(true);
+					button2.setClickable(true);
+					button3.setClickable(true);
+					button4.setClickable(true);
+					list.setClickable(true);
 			        ListView list = (ListView) findViewById(R.id.list);
 			        list.setVisibility(View.VISIBLE);
 			        
@@ -303,6 +343,11 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			// here you can add functions
 				ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.VISIBLE);	
+		    	button1.setClickable(false);
+				button2.setClickable(false);
+				button3.setClickable(false);
+				button4.setClickable(false);
+				list.setClickable(false);
 				new consumidorPostAceptarSolicitud().execute();
 			
 			}
@@ -311,7 +356,12 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			public void onClick(DialogInterface dialog, int which) {
 			// here you can add functions
 				ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
-		        pbar.setVisibility(pbar.VISIBLE);	
+		        pbar.setVisibility(pbar.VISIBLE);
+		    	button1.setClickable(false);
+				button2.setClickable(false);
+				button3.setClickable(false);
+				button4.setClickable(false);
+				list.setClickable(false);
 				new consumidorPostRechazarSolicitud().execute();
 
 			}
@@ -333,6 +383,11 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			        super.onPostExecute(result);
 			        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 			        pbar.setVisibility(pbar.INVISIBLE);
+			        button1.setClickable(true);
+					button2.setClickable(true);
+					button3.setClickable(true);
+					button4.setClickable(true);
+					list.setClickable(true);
 			        ListView list = (ListView) findViewById(R.id.list);
 			        
 			        int codigo_res = Integer.parseInt(result[0]);
@@ -376,6 +431,11 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 			        super.onPostExecute(result);
 			        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 			        pbar.setVisibility(pbar.INVISIBLE);
+			        button1.setClickable(true);
+					button2.setClickable(true);
+					button3.setClickable(true);
+					button4.setClickable(true);
+					list.setClickable(true);
 			        ListView list = (ListView) findViewById(R.id.list);
 			        
 			        int codigo_res = Integer.parseInt(result[0]);

@@ -63,7 +63,7 @@
         android:layout_height="wrap_content" >
 
         <ImageButton
-            android:id="@+id/ImageButton1"
+            android:id="@+id/ImageButton3"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginLeft="-3dp"
@@ -75,7 +75,7 @@
             android:src="@drawable/mapa" />
 
         <ImageButton
-            android:id="@+id/ImageButton1"
+            android:id="@+id/ImageButton4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="-4dp"
@@ -86,7 +86,7 @@
             android:src="@drawable/amigos" />
 
         <ImageButton
-            android:id="@+id/ImageButton1"
+            android:id="@+id/ImageButton5"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="-4dp"

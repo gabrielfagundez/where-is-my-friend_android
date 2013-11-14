@@ -21,16 +21,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Mapa extends android.support.v4.app.FragmentActivity implements LocationListener {
@@ -39,6 +38,9 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 	private static Context context;
 	public static Activity activ;
 	public static int isfront=0;
+	ImageButton button1;
+	ImageButton button2;
+	ImageButton button3;
 	
 	final int MARKER_UPDATE_INTERVAL = 10000; /* milliseconds */
     Handler handler = new Handler();
@@ -95,6 +97,15 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 			Amigos.activ.finish();
 		isfront=1;
 		setContentView(R.layout.mapa);
+		
+		//Pido los botones para bloquearlos
+		button1= (ImageButton) findViewById(R.id.ImageButton4);
+		button2 = (ImageButton) findViewById(R.id.ImageButton5);
+		button3= (ImageButton) findViewById(R.id.imageButton1);
+		button1.setClickable(true);
+		button2.setClickable(true);
+		button3.setClickable(true);
+		
 		Mapa.context = getApplicationContext();
 		activ = this;
 		// Getting Google Play availability status
@@ -173,9 +184,9 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
         }
             
         handler.postDelayed(updateMarker, MARKER_UPDATE_INTERVAL);
-        
         ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		pbar.setVisibility(View.INVISIBLE);
+        
 	}
 	
 	@Override
@@ -225,10 +236,10 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
         LatLng latLng = new LatLng(latitude, longitude);
 
         // Showing the current location in Google Map
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         // Zoom in the Google Map
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+       // googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
         
 
@@ -277,6 +288,9 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
         		//RUTINA AL APRETAR EL BOTON DE logout
                 ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
         		pbar.setVisibility(View.VISIBLE);
+        		button1.setClickable(false);
+        		button2.setClickable(false);
+        		button3.setClickable(false);
         		Comunicador com = new Comunicador();
         		new consumidorPostLogout().execute();	            	
             }
@@ -303,7 +317,9 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 		       // setProgressBarIndeterminateVisibility(false);
 		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.INVISIBLE);
-		        
+				button1.setClickable(true);
+				button2.setClickable(true);
+				button3.setClickable(true);
 		        int codigo_res = Integer.parseInt(result);
 				if (codigo_res==200){
 					//Logout exitoso

@@ -4,6 +4,7 @@ package com.whereismyfriend;
 
 
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
@@ -23,6 +24,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -37,6 +39,13 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	private String IdTo; 
 	public static int isfront;
 	
+	ImageButton button1;
+	ImageButton button2;
+	ImageButton button3;
+	ImageButton button4;
+	ListView list;
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         
@@ -50,6 +59,16 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		isfront=1;
 		setContentView(R.layout.amigos);
 		
+		//Pido los botones para bloquearlos
+		button1= (ImageButton) findViewById(R.id.ImageButton3);
+		button2 = (ImageButton) findViewById(R.id.ImageButton5);
+		button3= (ImageButton) findViewById(R.id.imageButton1);
+		button4= (ImageButton) findViewById(R.id.imageButton2);
+		button1.setClickable(true);
+		button2.setClickable(true);
+		button3.setClickable(true);
+		button4.setClickable(true);
+		
 		ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		pbar.setVisibility(View.VISIBLE);
 		
@@ -61,12 +80,18 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		ma.setSharedPrefs(pref);
 		
 		Amigos.context = getApplicationContext();
-		new consumidorPost().execute();
+		
+		button1.setClickable(false);
+		button2.setClickable(false);
+		button3.setClickable(false);
+		button4.setClickable(false);
 	
 		activ = this;
-		
-        ListView list = (ListView) findViewById(R.id.list);
+        list = (ListView) findViewById(R.id.list);
+        list.setClickable(false);
+        new consumidorPost().execute();
 		list.setOnItemClickListener(this);
+		
 	}
 	
 	
@@ -107,6 +132,12 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		       // setProgressBarIndeterminateVisibility(false);
 		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.INVISIBLE);
+				button1.setClickable(true);
+				button2.setClickable(true);
+				button3.setClickable(true);
+				button4.setClickable(true);
+				list.setClickable(true);
+				
 		        ListView list = (ListView) findViewById(R.id.list);
 		        list.setVisibility(View.VISIBLE);
 		        
@@ -216,6 +247,11 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
         		//RUTINA AL APRETAR EL BOTON DE logout
         		ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
         		pbar.setVisibility(pbar.VISIBLE);
+        		button1.setClickable(false);
+        		button2.setClickable(false);
+        		button3.setClickable(false);
+        		button4.setClickable(false);
+        		list.setClickable(false);
         		new consumidorPostLogout().execute();
 	            	
             }
@@ -243,6 +279,11 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		       // setProgressBarIndeterminateVisibility(false);
 		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.INVISIBLE);
+				button1.setClickable(true);
+				button2.setClickable(true);
+				button3.setClickable(true);
+				button4.setClickable(true);
+				list.setClickable(true);
 		        
 		        int codigo_res = Integer.parseInt(result);
 				if (codigo_res==200){
@@ -290,6 +331,11 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		       // setProgressBarIndeterminateVisibility(false);
 		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.INVISIBLE);
+				button1.setClickable(true);
+				button2.setClickable(true);
+				button3.setClickable(true);
+				button4.setClickable(true);
+				list.setClickable(true);
 		        ListView list = (ListView) findViewById(R.id.list);
 		        
 		        int codigo_res = Integer.parseInt(result[0]);
@@ -358,7 +404,6 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 			e.printStackTrace();
 		}
 	    boolean mande = manejador.yaEstaEnVisibles(IdTo);
-	    pbar.setVisibility(pbar.INVISIBLE);
 	    if (mande){
 	    	Toast.makeText(getApplicationContext(), R.string.solicitud_ya_enviada, Toast.LENGTH_LONG).show();
 	    }else{
@@ -370,6 +415,11 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 				// here you can add functions
 					ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 			        pbar.setVisibility(pbar.VISIBLE);	
+					button1.setClickable(false);
+					button2.setClickable(false);
+					button3.setClickable(false);
+					button4.setClickable(false);
+					list.setClickable(false);
 				    new consumidorPostSolicitud().execute();
 				}
 			});
@@ -380,6 +430,8 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 				}
 			});
 			alertDialog.setIcon(R.drawable.contacto);
+		    pbar.setVisibility(pbar.INVISIBLE);
+
 			alertDialog.show();	
 	    }
 	}

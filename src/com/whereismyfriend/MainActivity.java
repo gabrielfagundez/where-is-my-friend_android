@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
 	String user_id;
 	String user_mail;
 	String deviceid="";
+	Button button1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MainActivity extends Activity {
 		deviceid= intent.getStringExtra("deviceid");
 		if (deviceid==null)
 			deviceid="";
+		button1= (Button)findViewById(R.id.button1);
 	}
 
 	@Override
@@ -54,6 +56,7 @@ public class MainActivity extends Activity {
 	public void login(View view) {
 		//RUTINA AL APRETAR EL BOTON DE LOGIN
 		//Obtengo usuario y pass
+		button1.setClickable(false);
 		EditText mail = (EditText) findViewById(R.id.editText1);
 	    String mail_str = mail.getText().toString();
 		EditText password = (EditText) findViewById(R.id.editText2);
@@ -96,6 +99,7 @@ public class MainActivity extends Activity {
 		       // setProgressBarIndeterminateVisibility(false);
 		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
 		        pbar.setVisibility(pbar.INVISIBLE);
+		        button1.setClickable(true);
 		        
 		        int codigo_res = Integer.parseInt(result[0]);
 				if (codigo_res==200){
