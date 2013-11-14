@@ -393,11 +393,12 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		ListItem item =  (ListItem) l.getItemAtPosition(position);
 	    this.IdTo = item.getId();
 	    
-	    ManejadorAmigos manejador = ManejadorAmigos.getInstance();
-
-        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+	    ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
         pbar.setVisibility(pbar.VISIBLE);
-		try {
+		
+	  /*  ManejadorAmigos manejador = ManejadorAmigos.getInstance();
+
+        try {
 			manejador.actualizarPosiciones();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -409,7 +410,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	    boolean mande = manejador.yaEstaEnVisibles(IdTo);
 	    if (mande){
 	    	Toast.makeText(getApplicationContext(), R.string.solicitud_ya_enviada, Toast.LENGTH_LONG).show();
-	    }else{
+	    }else{*/
 		    final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.solicitud_titulo));
 			alertDialog.setMessage(getString(R.string.enviar_solicitud) + " " + item.getName() );
@@ -436,7 +437,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 		    pbar.setVisibility(pbar.INVISIBLE);
 
 			alertDialog.show();	
-	    }
+	  //  }
 	}
 	
 	
