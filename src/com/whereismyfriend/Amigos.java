@@ -308,6 +308,9 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 				else if (codigo_res==401){
 					Toast.makeText(getApplicationContext(),R.string.invalid_password, Toast.LENGTH_LONG).show();
 				}
+				else if (codigo_res==400){
+					Toast.makeText(getApplicationContext(),R.string.solicitud_ya_enviada, Toast.LENGTH_LONG).show();
+				}
 				else{
 					//OTRO TIPO DE ERROR
 			    	Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
