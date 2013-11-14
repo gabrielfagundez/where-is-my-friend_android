@@ -311,7 +311,7 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 					pref.edit().putString("user_mail", "").commit();
 					
 					Intent intent_name = new Intent();
-					intent_name.setClass(getApplicationContext(), MainActivity.class);
+					intent_name.setClass(getApplicationContext(), DemoActivity.class);
 					startActivity(intent_name);
 					activ.finish();
 				}

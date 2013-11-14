@@ -157,7 +157,7 @@ public class Solicitudes extends Activity implements AdapterView.OnItemClickList
 					pref.edit().putString("user_mail", "").commit();
 					
 					Intent intent_name = new Intent();
-					intent_name.setClass(getApplicationContext(), MainActivity.class);
+					intent_name.setClass(getApplicationContext(), DemoActivity.class);
 					startActivity(intent_name);
 					activ.finish();
 				}
