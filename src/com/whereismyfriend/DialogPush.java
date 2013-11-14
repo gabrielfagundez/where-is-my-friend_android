@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 public class DialogPush extends Activity {
 
+	String type;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -18,6 +19,7 @@ public class DialogPush extends Activity {
 		Intent intent = getIntent();
 		String alert= intent.getStringExtra("alert");
 		String badge= intent.getStringExtra("badge");
+		type = intent.getStringExtra("type");
 		String mensaje;
 		if (Integer.parseInt(badge)>1)
         	mensaje=getResources().getString(R.string.push_no_leidas_1)+ " "+ badge + " "+ getResources().getString(R.string.push_no_leidas_2);
@@ -43,10 +45,18 @@ public class DialogPush extends Activity {
 		if (Solicitudes.activ!=null)
 			Solicitudes.activ.finish();
 		
-		Intent intent_name = new Intent();
-		intent_name.setClass(getApplicationContext(),Solicitudes.class);
-		startActivity(intent_name);
-		finish();
+		if (type.compareTo("s")==0){
+			Intent intent_name = new Intent();
+			intent_name.setClass(getApplicationContext(),Solicitudes.class);
+			startActivity(intent_name);
+			finish();
+		}
+		else{
+			Intent intent_name = new Intent();
+			intent_name.setClass(getApplicationContext(),Mapa.class);
+			startActivity(intent_name);
+			finish();
+		}
 	}
 	
 	public void cancel (View view){

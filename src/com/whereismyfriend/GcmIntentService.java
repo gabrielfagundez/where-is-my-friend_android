@@ -44,7 +44,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
  * wake lock.
  */
 public class GcmIntentService extends IntentService {
-    public static final int NOTIFICATION_ID = 1;
+    //public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
 
@@ -81,12 +81,14 @@ public class GcmIntentService extends IntentService {
         		if (extras.getString("alert")!=null){
         			SharedPreferences pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);
         			boolean logueado = pref.getBoolean("log_in", false);
+        			/*String type = extras.getString("type"); */
+        			String type="s"; /*BORRAR ESTO CUANDO EL SERVER ESTE PRONTO*/
         			if (!corriendo || !logueado)
-        				sendNotification(extras.getString("alert"), extras.getString("badge"));
+        				sendNotification(extras.getString("alert"), extras.getString("badge"), type);
         			else{
         				 synchronized (this) 
         				  {
-        				    startActivity(new Intent(this,DialogPush.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("alert", extras.getString("alert")).putExtra("badge", extras.getString("badge")));
+        				    startActivity(new Intent(this,DialogPush.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("alert", extras.getString("alert")).putExtra("badge", extras.getString("badge")).putExtra("type", type));
         				  }
         			}
         			
@@ -101,13 +103,23 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String msg, String badge) {
+    private void sendNotification(String msg, String badge, String type) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+        
+        int notification_id;
+        PendingIntent contentIntent;
+        if (type.compareTo("s")==0){
+        	contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, Solicitudes.class), 0);
-
+        	notification_id=0;
+        }	
+        else{
+        	contentIntent = PendingIntent.getActivity(this, 0,
+                    new Intent(this, Mapa.class), 0);
+        	notification_id=1;
+        }	
+        	
         if (Integer.parseInt(badge)>1)
         	msg=getResources().getString(R.string.push_no_leidas_1)+ " "+ badge + " "+ getResources().getString(R.string.push_no_leidas_2);
         
@@ -138,6 +150,6 @@ public class GcmIntentService extends IntentService {
         }
         
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        mNotificationManager.notify(notification_id, mBuilder.build());
     }
 }

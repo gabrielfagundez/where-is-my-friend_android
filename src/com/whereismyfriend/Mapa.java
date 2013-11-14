@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -84,6 +85,8 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.cancel(1);
 		if (Solicitudes.activ!=null)
 			Solicitudes.activ.finish();
 		if (Mapa.activ!=null)
