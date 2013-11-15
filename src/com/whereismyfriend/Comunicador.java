@@ -273,7 +273,7 @@ public class Comunicador {
 	}
 	
 	
-	public String[] GetLastFriendsLocationById(String userid){
+	public String[] GetLastFriendsLocationById(String userid, String mail){
 	
 		
 	    String[] result = {"-1","-1"};
@@ -281,6 +281,33 @@ public class Comunicador {
 		
 	    // Create a new HttpClient and Post Header
 		try {
+			//Seteo el badge en 0
+			Properties prop1 = new Properties();
+			prop1.load(getClass().getResourceAsStream("server.properties"));
+			String server1 = prop1.getProperty("resetbadge");
+		    HttpPost httppost1 = new HttpPost(server1);
+	        // Add your data
+	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+	        nameValuePairs.add(new BasicNameValuePair("Mail", mail));
+	        httppost1.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+	        // Execute HTTP Post Request
+	        //Timeout
+	    	HttpParams httpParameters1 = new BasicHttpParams();
+	    	// Set the timeout in milliseconds until a connection is established.
+	    	int timeoutConnection1 = Integer.parseInt(prop1.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setConnectionTimeout(httpParameters1, timeoutConnection1);
+	    	// Set the default socket timeout (SO_TIMEOUT) 
+	    	// in milliseconds which is the timeout for waiting for data.
+	    	int timeoutSocket1 = Integer.parseInt(prop1.getProperty("connectiontimeout"));
+	    	HttpConnectionParams.setSoTimeout(httpParameters1, timeoutSocket1);
+	        
+	        // Execute HTTP Post Request
+	        DefaultHttpClient httpClient1 = new DefaultHttpClient(httpParameters1);
+	    	BasicHttpResponse response1 = (BasicHttpResponse)  httpClient1.execute(httppost1);
+	    	if (response1.getStatusLine().getStatusCode()!=200)
+				throw  new ClientProtocolException();
+	    	else{			
 			Properties prop = new Properties();
 			prop.load(getClass().getResourceAsStream("server.properties"));
 			String server = prop.getProperty("lastfriendlocation");
@@ -313,7 +340,7 @@ public class Comunicador {
 	       }
 		
 		return result;
-		
+	    }
 		} catch (ClientProtocolException e) {
 	        // TODO Auto-generated catch block
 	    	String[] result2={"-1"};

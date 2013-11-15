@@ -81,8 +81,7 @@ public class GcmIntentService extends IntentService {
         		if (extras.getString("alert")!=null){
         			SharedPreferences pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);
         			boolean logueado = pref.getBoolean("log_in", false);
-        			/*String type = extras.getString("type"); */
-        			String type="s"; /*BORRAR ESTO CUANDO EL SERVER ESTE PRONTO*/
+        			String type = extras.getString("type");
         			if (!corriendo || !logueado)
         				sendNotification(extras.getString("alert"), extras.getString("badge"), type);
         			else{

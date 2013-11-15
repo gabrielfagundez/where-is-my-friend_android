@@ -101,7 +101,7 @@ public class ManejadorAmigos {
 		protected String[] doInBackground(String[]... arg0) {
 			// TODO Auto-generated method stub
 			Comunicador com= new Comunicador();
-			String[] res= com.GetLastFriendsLocationById(sharedPrefs.getString("user_id", ""));
+			String[] res= com.GetLastFriendsLocationById(sharedPrefs.getString("user_id", ""),sharedPrefs.getString("user_mail", ""));
 			
 			int codigo_res = Integer.parseInt(res[0]);
 			

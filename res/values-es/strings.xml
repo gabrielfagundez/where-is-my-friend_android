@@ -29,6 +29,8 @@
     <string name="no_solicitudes" >Sin solicitudes para mostrar.</string>
     <string name="push_no_leidas_1" >Tienes </string>
     <string name="push_no_leidas_2" > nuevas solicitudes pendientes. </string>
+    <string name="push_no_leidas_1_acc">Tienes </string>
+    <string name="push_no_leidas_2_acc"> nuevas solicitudes aceptadas. </string>
     <string name="connecting_to_server" > Conectando al servidor para recibir actualizaciones. Por favor espere. </string>
     <string name="tryagain" > Intenta nuevamente </string>
     <string name="no_push_server" > Sin conexión al servidor. Por favor intenta nuevamente. </string>
