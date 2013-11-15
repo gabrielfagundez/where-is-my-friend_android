@@ -21,7 +21,7 @@ import org.json.JSONTokener;
 
 public class WSSetLocation {
 
-	public String[] llamarServer(String mail, String latitude, String longitude) {
+	public String[] llamarServer(String mail, String name, String latitude, String longitude) {
 		
 	    // Create a new HttpClient and Post Header
 
@@ -32,6 +32,7 @@ public class WSSetLocation {
 	    	// Build the JSON object to pass parameters
 	    	JSONObject jsonObj = new JSONObject();
 	    	jsonObj.put("Mail", mail);
+	    	jsonObj.put("Name", name);
 	    	jsonObj.put("Latitude", latitude);
 	    	jsonObj.put("Longitude", longitude);
 	    	// Create the POST object and add the parameters

@@ -27,11 +27,12 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
     	//OBTENER EL MAIL DE ALGUN SHARED PREFERENCES
         SharedPreferences pref = context.getApplicationContext().getSharedPreferences("prefs",Context.MODE_PRIVATE);
         String mail=pref.getString("user_mail","");
+        String name=pref.getString("user_name", "");
         if (mail.compareTo("")!=0){
 	    	latitude=Float.toString(locationInfo.lastLat);
 	    	longitude=Float.toString(locationInfo.lastLong);
 	    	//Hago la llamada al server
-	    	String [] parametros = {mail,latitude,longitude};
+	    	String [] parametros = {mail,name,latitude,longitude};
 	    	new consumidorPost().execute(parametros);
         }
     }
@@ -41,7 +42,7 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
 		protected String[] doInBackground(String[]... arg0) {
 			// TODO Auto-generated method stub
 			WSSetLocation wssetlocation= new WSSetLocation();
-			String[] res= wssetlocation.llamarServer(arg0[0][0], arg0[0][1],arg0[0][2]);
+			String[] res= wssetlocation.llamarServer(arg0[0][0], arg0[0][1],arg0[0][2],arg0[0][3]);
 			return res;
 		}
 		
