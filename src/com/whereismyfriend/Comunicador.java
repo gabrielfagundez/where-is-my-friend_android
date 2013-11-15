@@ -284,7 +284,7 @@ public class Comunicador {
 			//Seteo el badge en 0
 			Properties prop1 = new Properties();
 			prop1.load(getClass().getResourceAsStream("server.properties"));
-			String server1 = prop1.getProperty("resetbadge");
+			String server1 = prop1.getProperty("resetbadgeaccept");
 		    HttpPost httppost1 = new HttpPost(server1);
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);

@@ -24,6 +24,7 @@
     <string name="rechazar" >Rechazar</string>
     <string name="solicitud" >Deseas aceptar la solicitud de</string>
     <string name="solicitud_titulo" >¿Aceptar o rechazar?</string>
+    <string name="solicitud_titulo_send">Solicitud de ubicación</string>
     <string name="enviar_solicitud" >Deseas enviar una solicitud a</string>
     <string name="no_amigos" >Sin amigos para mostrar.</string>
     <string name="no_solicitudes" >Sin solicitudes para mostrar.</string>

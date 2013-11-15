@@ -24,6 +24,7 @@
     <string name="rechazar">Reject</string>
     <string name="solicitud">Do you wish to accept the request from</string>
     <string name="solicitud_titulo">Accept or Reject?</string>
+    <string name="solicitud_titulo_send">Location request</string>
     <string name="enviar_solicitud">Do you wish to send a request to</string>
     <string name="no_amigos">No Friends to show.</string>
     <string name="no_solicitudes">No Requests to show.</string>

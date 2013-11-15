@@ -148,7 +148,6 @@ public class MainActivity extends Activity {
 					//Borro los campos y pongo el foco en el primero
 					EditText mail = (EditText) findViewById(R.id.editText1);
 					EditText password = (EditText) findViewById(R.id.editText2);
-					mail.setText("");
 					password.setText("");
 					mail.requestFocus();
 			    	Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();

@@ -32,8 +32,10 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
 	    	latitude=Float.toString(locationInfo.lastLat);
 	    	longitude=Float.toString(locationInfo.lastLong);
 	    	//Hago la llamada al server
-	    	String [] parametros = {mail,name,latitude,longitude};
-	    	new consumidorPost().execute(parametros);
+	    	if (!latitude.isEmpty()){
+		    	String [] parametros = {mail,name,latitude,longitude};
+		    	new consumidorPost().execute(parametros);
+	    	}
         }
     }
     

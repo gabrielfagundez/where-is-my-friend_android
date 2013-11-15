@@ -119,9 +119,13 @@ public class GcmIntentService extends IntentService {
         	notification_id=1;
         }	
         	
-        if (Integer.parseInt(badge)>1)
-        	msg=getResources().getString(R.string.push_no_leidas_1)+ " "+ badge + " "+ getResources().getString(R.string.push_no_leidas_2);
-        
+        if (Integer.parseInt(badge)>1){
+        	if (type.compareTo("s")==0)
+        		msg=getResources().getString(R.string.push_no_leidas_1)+ " "+ badge + " "+ getResources().getString(R.string.push_no_leidas_2);
+        	else
+        		msg=getResources().getString(R.string.push_no_leidas_1_acc)+ " "+ badge + " "+ getResources().getString(R.string.push_no_leidas_2_acc);
+        }
+
         
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)

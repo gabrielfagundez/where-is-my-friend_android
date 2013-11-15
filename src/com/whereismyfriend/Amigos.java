@@ -412,7 +412,7 @@ public class Amigos extends Activity implements AdapterView.OnItemClickListener 
 	    	Toast.makeText(getApplicationContext(), R.string.solicitud_ya_enviada, Toast.LENGTH_LONG).show();
 	    }else{*/
 		    final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-			alertDialog.setTitle(getString(R.string.solicitud_titulo));
+			alertDialog.setTitle(getString(R.string.solicitud_titulo_send));
 			alertDialog.setMessage(getString(R.string.enviar_solicitud) + " " + item.getName() );
 			alertDialog.setButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
