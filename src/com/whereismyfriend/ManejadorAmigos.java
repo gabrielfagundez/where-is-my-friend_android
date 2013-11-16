@@ -119,8 +119,14 @@ public class ManejadorAmigos {
 						JSONObject jsonO = jsonA.getJSONObject(i);
 						Amigo a = m.getAmigoByMail(jsonO.get("Mail").toString());
 					 	Amigo amigo = new Amigo(jsonO.get("Name").toString(),jsonO.get("Mail").toString(),a.getId());
-						amigo.setLat(Double.parseDouble(jsonO.get("Latitude").toString()));
-						amigo.setLon(Double.parseDouble(jsonO.get("Longitude").toString()));
+					 	if (jsonO.get("Latitude")!=null && !jsonO.get("Latitude").toString().isEmpty() && jsonO.get("Latitude").toString().compareTo("null")!=0){
+							amigo.setLat(Double.parseDouble(jsonO.get("Latitude").toString()));
+							amigo.setLon(Double.parseDouble(jsonO.get("Longitude").toString()));
+					 	}
+					 	else{
+					 		amigo.setLat(-1);
+							amigo.setLon(-1);
+					 	}
 					 	amigos.add(amigo);
 					 	System.out.println(jsonO.get("Mail").toString());
 					}

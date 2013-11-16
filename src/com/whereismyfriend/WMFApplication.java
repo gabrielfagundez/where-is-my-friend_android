@@ -27,6 +27,7 @@ public class WMFApplication extends Application {
             // every 1 minute, and force a location update if there hasn't been one for 2 minutes.
         	//Lo cambie a 15 y 30 seg
             LocationLibrary.initialiseLibrary(getBaseContext(), 15 * 1000, 30 * 1000, "com.whereismyfriend");
+            LocationLibrary.startAlarmAndListener(getBaseContext());
         }
         catch (UnsupportedOperationException ex) {
             Log.d("TestApplication", "UnsupportedOperationException thrown - the device doesn't have any location providers");

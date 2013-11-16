@@ -70,10 +70,15 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
                 while(it.hasNext())
                 {
                     Amigo am = it.next();
-                    MarkerOptions mr = new MarkerOptions();
-                    mr.position(new LatLng(am.getLat(),am.getLon()));
-                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
-                    googleMap.addMarker(mr);
+                    if (am.getLat()!=-1){
+	                    MarkerOptions mr = new MarkerOptions();
+	                    mr.position(new LatLng(am.getLat(),am.getLon()));
+	                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
+	                    googleMap.addMarker(mr);
+                    }
+                    else{                  
+    			    	Toast.makeText(getApplicationContext(),R.string.no_marker_1+manejador.getAmigoByMail(am.getMail()).getName()+ R.string.no_marker_2, Toast.LENGTH_LONG).show();
+                    }
                 }
             }
             
@@ -166,10 +171,15 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
                 while(it.hasNext())
                 {
                     Amigo am = it.next();
-                    MarkerOptions mr = new MarkerOptions();
-                    mr.position(new LatLng(am.getLat(),am.getLon()));
-                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
-                    googleMap.addMarker(mr);
+                    if (am.getLat()!=-1){
+	                    MarkerOptions mr = new MarkerOptions();
+	                    mr.position(new LatLng(am.getLat(),am.getLon()));
+	                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
+	                    googleMap.addMarker(mr);
+                    }
+                    else{
+    			    	Toast.makeText(getApplicationContext(),R.string.no_marker_1+manejador.getAmigoByMail(am.getMail()).getName()+ R.string.no_marker_2, Toast.LENGTH_LONG).show();
+                    }
                 }
             }
             

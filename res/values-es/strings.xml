@@ -38,8 +38,10 @@
     <string name="mando_solicitud_correctamente">Solicitud enviada con éxito</string>
     <string name="acepto_solicitud">Solicitud aceptada</string>
     <string name="rechazo_solicitud">Solicitud rechazada</string>
-    <string name="title_activity_dialog_push">Nueva notificación!</string>
+    <string name="title_activity_dialog_push">¡Nueva notificación!</string>
     <string name="yes_dialog_push">Ver ahora</string>
     <string name="no_dialog_push">Más tarde</string>
     <string name="solicitud_ya_enviada">Solicitud ya enviada</string>
+    <string name="no_marker_1">Hubo un error al obtener la posicion de </string>
+    <string name="no_marker_2">.</string>
 </resources>
