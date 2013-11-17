@@ -60,7 +60,7 @@
             android:adjustViewBounds="true"
             android:clickable="false"
             android:scaleType="fitCenter"
-            android:src="@drawable/mapa" />
+            android:src="@drawable/mapac" />
 
         <ImageButton
             android:id="@+id/ImageButton4"

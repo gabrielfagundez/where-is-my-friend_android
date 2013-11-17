@@ -76,6 +76,7 @@
 
         <ImageButton
             android:id="@+id/ImageButton4"
+            style="@drawable/amigosc"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="-4dp"
@@ -83,7 +84,7 @@
             android:layout_weight="1"
             android:clickable="false"
             android:scaleType="fitCenter"
-            android:src="@drawable/amigos" />
+            android:src="@drawable/amigosc" />
 
         <ImageButton
             android:id="@+id/ImageButton5"

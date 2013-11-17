@@ -90,7 +90,7 @@
             android:layout_weight="1"
             android:clickable="false"
             android:scaleType="fitCenter"
-            android:src="@drawable/solicitud" />
+            android:src="@drawable/solicitudc" />
 
     </LinearLayout>
 
