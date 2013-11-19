@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class LocationBroadcastReceiver extends BroadcastReceiver {
 	String latitude;
 	String longitude;
-
+	
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("LocationBroadcastReceiver", "onReceive: received location update");
@@ -52,7 +52,8 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
 		protected void onPostExecute(String[] result){
             super.onPostExecute(result);
             int codigo_res = Integer.parseInt(result[0]);
-			//Si quiero hacer algo con el resultado es acá
+	    	Log.i("ESTO", Integer.toString(codigo_res));
+
 		}
     }
 }

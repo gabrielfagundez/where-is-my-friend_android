@@ -77,7 +77,7 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 	                    googleMap.addMarker(mr);
                     }
                     else{                  
-    			    	Toast.makeText(getApplicationContext(),R.string.no_marker_1+manejador.getAmigoByMail(am.getMail()).getName()+ R.string.no_marker_2, Toast.LENGTH_LONG).show();
+    			    	Toast.makeText(getApplicationContext(),getResources().getString(R.string.no_marker_1)+manejador.getAmigoByMail(am.getMail()).getName()+ getResources().getString(R.string.no_marker_2), Toast.LENGTH_LONG).show();
                     }
                 }
             }
