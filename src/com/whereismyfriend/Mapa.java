@@ -358,7 +358,7 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 	                    if (am.getLat()!=-1){
 		                    MarkerOptions mr = new MarkerOptions();
 		                    mr.position(new LatLng(am.getLat(),am.getLon()));
-		                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
+		                    mr.title(am.getName());
 		                    googleMap.addMarker(mr);
 	                    }
 	                    else{

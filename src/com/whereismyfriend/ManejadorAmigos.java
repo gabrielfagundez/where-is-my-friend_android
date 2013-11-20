@@ -13,6 +13,7 @@ import org.json.JSONTokener;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 
 
@@ -121,11 +122,15 @@ public class ManejadorAmigos {
 					 	ManejadorAmigos m = ManejadorAmigos.getInstance();
 					 	
 						for (int i = 0; i < jsonA.length(); i++) {
+							Log.i("PRUEBA",Integer.toString(i));
 							JSONObject jsonO = jsonA.getJSONObject(i);
-							Amigo a = m.getAmigoByMail(jsonO.get("Mail").toString());
+						//	Amigo a = m.getAmigoByMail(jsonO.get("Mail").toString());
+						//	if (a==null) Log.i("PRUEBA","ES NULLLLL");
+						//	Log.i("PRUEBA",a.getName());
 							String nombre = jsonO.get("Name").toString();
 							String email= jsonO.get("Mail").toString();
-							String amigoid= a.getId();
+							String amigoid= "ID";
+							
 						 	Amigo amigo = new Amigo(nombre,email,amigoid);
 						 	if (jsonO.get("Latitude")!=null && !jsonO.get("Latitude").toString().isEmpty() && jsonO.get("Latitude").toString().compareTo("null")!=0){
 								amigo.setLat(Double.parseDouble(jsonO.get("Latitude").toString()));
