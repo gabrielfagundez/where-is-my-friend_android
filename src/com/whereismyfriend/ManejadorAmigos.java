@@ -11,12 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 
 
 
@@ -92,10 +88,10 @@ public class ManejadorAmigos {
 	}
 	
 
+
 	public void actualizarPosiciones(String [] param) throws InterruptedException, ExecutionException{
-    	consumidorPost cp = new consumidorPost();
-    	String [] s = cp.execute(param).get();
-    }
+		new consumidorPost().execute();
+	}	
     
     private class consumidorPost extends AsyncTask<String[], Void, String[]>{
 		protected String[] doInBackground(String[]... arg0) {
@@ -103,45 +99,7 @@ public class ManejadorAmigos {
 			Comunicador com= new Comunicador();
 			String[] res= com.GetLastFriendsLocationById(arg0[0][0], arg0[0][1]);
 			
-			int codigo_res = Integer.parseInt(res[0]);
-			
-			
-			if (codigo_res==200){
-			
-				ArrayList<Amigo> amigos = new ArrayList<Amigo>();
-				try {
-					
-					JSONTokener jsonT = new JSONTokener(res[1]);
-				 	JSONArray jsonA = new JSONArray(jsonT);
-				 	ManejadorAmigos m = ManejadorAmigos.getInstance();
-				 	
-					for (int i = 0; i < jsonA.length(); i++) {
-						JSONObject jsonO = jsonA.getJSONObject(i);
-						Amigo a = m.getAmigoByMail(jsonO.get("Mail").toString());
-					 	Amigo amigo = new Amigo(jsonO.get("Name").toString(),jsonO.get("Mail").toString(),a.getId());
-					 	if (jsonO.get("Latitude")!=null && !jsonO.get("Latitude").toString().isEmpty() && jsonO.get("Latitude").toString().compareTo("null")!=0){
-							amigo.setLat(Double.parseDouble(jsonO.get("Latitude").toString()));
-							amigo.setLon(Double.parseDouble(jsonO.get("Longitude").toString()));
-					 	}
-					 	else{
-					 		amigo.setLat(-1);
-							amigo.setLon(-1);
-					 	}
-					 	amigos.add(amigo);
-					 	System.out.println(jsonO.get("Mail").toString());
-					}
-					
-				} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-				}
-					
 				
-				
-				ManejadorAmigos.getInstance().setAmigosVisibles(amigos);
-				
-			}
-			
 			return res;
 		}
 		
@@ -150,7 +108,45 @@ public class ManejadorAmigos {
 		        super.onPostExecute(result);
 		       // setProgressBarIndeterminateVisibility(false);
 		        
-							
+		        int codigo_res = Integer.parseInt(result[0]);
+				
+				
+				if (codigo_res==200){
+				
+					ArrayList<Amigo> amigos = new ArrayList<Amigo>();
+					try {
+						
+						JSONTokener jsonT = new JSONTokener(result[1]);
+					 	JSONArray jsonA = new JSONArray(jsonT);
+					 	ManejadorAmigos m = ManejadorAmigos.getInstance();
+					 	
+						for (int i = 0; i < jsonA.length(); i++) {
+							JSONObject jsonO = jsonA.getJSONObject(i);
+							Amigo a = m.getAmigoByMail(jsonO.get("Mail").toString());
+						 	Amigo amigo = new Amigo(jsonO.get("Name").toString(),jsonO.get("Mail").toString(),a.getId());
+						 	if (jsonO.get("Latitude")!=null && !jsonO.get("Latitude").toString().isEmpty() && jsonO.get("Latitude").toString().compareTo("null")!=0){
+								amigo.setLat(Double.parseDouble(jsonO.get("Latitude").toString()));
+								amigo.setLon(Double.parseDouble(jsonO.get("Longitude").toString()));
+						 	}
+						 	else{
+						 		amigo.setLat(-1);
+								amigo.setLon(-1);
+						 	}
+						 	amigos.add(amigo);
+						 	System.out.println(jsonO.get("Mail").toString());
+						}
+						
+					} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+					}
+						
+					
+					
+					ManejadorAmigos.getInstance().setAmigosVisibles(amigos);
+					
+				}
+					
 				
 		        
 		        
