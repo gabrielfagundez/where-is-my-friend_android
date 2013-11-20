@@ -92,16 +92,16 @@ public class ManejadorAmigos {
 	}
 	
 
-	public void actualizarPosiciones() throws InterruptedException, ExecutionException{
+	public void actualizarPosiciones(String [] param) throws InterruptedException, ExecutionException{
     	consumidorPost cp = new consumidorPost();
-    	String [] s = cp.execute().get();
+    	String [] s = cp.execute(param).get();
     }
     
     private class consumidorPost extends AsyncTask<String[], Void, String[]>{
 		protected String[] doInBackground(String[]... arg0) {
 			// TODO Auto-generated method stub
 			Comunicador com= new Comunicador();
-			String[] res= com.GetLastFriendsLocationById(sharedPrefs.getString("user_id", ""),sharedPrefs.getString("user_mail", ""));
+			String[] res= com.GetLastFriendsLocationById(arg0[0][0], arg0[0][1]);
 			
 			int codigo_res = Integer.parseInt(res[0]);
 			

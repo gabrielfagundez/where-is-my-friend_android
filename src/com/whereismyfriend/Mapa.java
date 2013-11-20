@@ -54,7 +54,8 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 
 			
 			try {
-				manejador.actualizarPosiciones();
+				String [] parametro={getSharedPreferences("prefs", MODE_PRIVATE).getString("user_id", ""),getSharedPreferences("prefs", MODE_PRIVATE).getString("user_mail", "")};
+				manejador.actualizarPosiciones(parametro);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -155,7 +156,8 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 
 			
 			try {
-				manejador.actualizarPosiciones();
+				String [] parametro={getSharedPreferences("prefs", MODE_PRIVATE).getString("user_id", ""),getSharedPreferences("prefs", MODE_PRIVATE).getString("user_mail", "")};
+				manejador.actualizarPosiciones(parametro);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
