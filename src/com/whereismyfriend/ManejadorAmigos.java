@@ -90,7 +90,7 @@ public class ManejadorAmigos {
 
 
 	public void actualizarPosiciones(String [] param) throws InterruptedException, ExecutionException{
-		new consumidorPost().execute();
+		new consumidorPost().execute(param);
 	}	
     
     private class consumidorPost extends AsyncTask<String[], Void, String[]>{
@@ -123,7 +123,10 @@ public class ManejadorAmigos {
 						for (int i = 0; i < jsonA.length(); i++) {
 							JSONObject jsonO = jsonA.getJSONObject(i);
 							Amigo a = m.getAmigoByMail(jsonO.get("Mail").toString());
-						 	Amigo amigo = new Amigo(jsonO.get("Name").toString(),jsonO.get("Mail").toString(),a.getId());
+							String nombre = jsonO.get("Name").toString();
+							String email= jsonO.get("Mail").toString();
+							String amigoid= a.getId();
+						 	Amigo amigo = new Amigo(nombre,email,amigoid);
 						 	if (jsonO.get("Latitude")!=null && !jsonO.get("Latitude").toString().isEmpty() && jsonO.get("Latitude").toString().compareTo("null")!=0){
 								amigo.setLat(Double.parseDouble(jsonO.get("Latitude").toString()));
 								amigo.setLon(Double.parseDouble(jsonO.get("Longitude").toString()));
