@@ -50,37 +50,13 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
         public void run() {
             googleMap.clear();
             
-            ManejadorAmigos manejador = ManejadorAmigos.getInstance();
-
+            ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+	        pbar.setVisibility(pbar.VISIBLE);
+			button1.setClickable(false);
+			button2.setClickable(false);
+			button3.setClickable(false);
 			
-			try {
-				manejador.actualizarPosiciones();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            
-            ArrayList<Amigo> amigos = manejador.getAmigosVisibles();
-            
-            if (amigos != null){
-            	Iterator<Amigo> it = amigos.iterator();
-                while(it.hasNext())
-                {
-                    Amigo am = it.next();
-                    if (am.getLat()!=-1){
-	                    MarkerOptions mr = new MarkerOptions();
-	                    mr.position(new LatLng(am.getLat(),am.getLon()));
-	                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
-	                    googleMap.addMarker(mr);
-                    }
-                    else{                  
-    			    	Toast.makeText(getApplicationContext(),getResources().getString(R.string.no_marker_1)+manejador.getAmigoByMail(am.getMail()).getName()+ getResources().getString(R.string.no_marker_2), Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
+            new consumidorPostMapa().execute();
             
             //marker = map.addMarker(new MarkerOptions().position(location));
 
@@ -151,37 +127,14 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
             }
             locationManager.requestLocationUpdates(provider, 5000, 0, this);		
         
-            ManejadorAmigos manejador = ManejadorAmigos.getInstance();
-
+            
+            ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+	        pbar.setVisibility(pbar.VISIBLE);
+			button1.setClickable(false);
+			button2.setClickable(false);
+			button3.setClickable(false);
 			
-			try {
-				manejador.actualizarPosiciones();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            
-            ArrayList<Amigo> amigos = manejador.getAmigosVisibles();
-            
-            if (amigos != null){
-            	Iterator<Amigo> it = amigos.iterator();
-                while(it.hasNext())
-                {
-                    Amigo am = it.next();
-                    if (am.getLat()!=-1){
-	                    MarkerOptions mr = new MarkerOptions();
-	                    mr.position(new LatLng(am.getLat(),am.getLon()));
-	                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
-	                    googleMap.addMarker(mr);
-                    }
-                    else{
-    			    	Toast.makeText(getApplicationContext(),R.string.no_marker_1+manejador.getAmigoByMail(am.getMail()).getName()+ R.string.no_marker_2, Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
+            new consumidorPostMapa().execute();
             
             
             
@@ -354,6 +307,59 @@ public class Mapa extends android.support.v4.app.FragmentActivity implements Loc
 			    	Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
 					
 				}
+			}
+		
+	}
+    
+  //METODOS LLAMADOS PARA ACTUALIZAR MAPA
+    private class consumidorPostMapa extends AsyncTask<String, Void, String>{
+		protected String doInBackground(String...s) {
+			// TODO Auto-generated method stub			
+			ManejadorAmigos manejador = ManejadorAmigos.getInstance();
+			
+			try {
+				manejador.actualizarPosiciones();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
+		
+		 @Override
+			protected void onPostExecute(String result){
+		        super.onPostExecute(result);
+		       // setProgressBarIndeterminateVisibility(false);
+		        ProgressBar pbar = (ProgressBar) findViewById(R.id.progressBar1);
+		        pbar.setVisibility(pbar.INVISIBLE);
+				button1.setClickable(true);
+				button2.setClickable(true);
+				button3.setClickable(true);
+		        
+				ManejadorAmigos manejador = ManejadorAmigos.getInstance();
+
+				ArrayList<Amigo> amigos = manejador.getAmigosVisibles();
+	            
+	            if (amigos != null){
+	            	Iterator<Amigo> it = amigos.iterator();
+	                while(it.hasNext())
+	                {
+	                    Amigo am = it.next();
+	                    if (am.getLat()!=-1){
+		                    MarkerOptions mr = new MarkerOptions();
+		                    mr.position(new LatLng(am.getLat(),am.getLon()));
+		                    mr.title(manejador.getAmigoByMail(am.getMail()).getName());
+		                    googleMap.addMarker(mr);
+	                    }
+	                    else{
+	    			    	Toast.makeText(getApplicationContext(),R.string.no_marker_1+manejador.getAmigoByMail(am.getMail()).getName()+ R.string.no_marker_2, Toast.LENGTH_LONG).show();
+	                    }
+	                }
+	            }
 			}
 		
 	}
