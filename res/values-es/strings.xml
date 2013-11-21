@@ -39,7 +39,7 @@
     <string name="rechazo_solicitud">Solicitud rechazada.</string>
     <string name="title_activity_dialog_push">¡Nueva notificación!</string>
     <string name="yes_dialog_push">Ver ahora</string>
-    <string name="no_dialog_push">Ver más tarde</string>
+    <string name="no_dialog_push">Ver después</string>
     <string name="solicitud_ya_enviada">Ya enviaste una solicitud a este usuario.</string>
     <string name="no_marker_1">Hubo un error al obtener la posicion de </string>
     <string name="no_marker_2">. </string>
