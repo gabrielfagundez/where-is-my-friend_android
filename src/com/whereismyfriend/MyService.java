@@ -46,15 +46,15 @@ public class MyService extends IntentService
 		LocationPollerParameter parameter = new LocationPollerParameter(bundle);
 		parameter.setIntentToBroadcastOnCompletion(new Intent(this, LocationReceiver.class));
 	
-		 final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-		 if (manager.isProviderEnabled( LocationManager.GPS_PROVIDER ))
-			 parameter.setProviders(new String[]{LocationManager.GPS_PROVIDER});
-		 else
-			 parameter.setProviders(new String[]{LocationManager.NETWORK_PROVIDER});
+//		 final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+//		 if (manager.isProviderEnabled( LocationManager.GPS_PROVIDER ))
+//			 parameter.setProviders(new String[]{LocationManager.GPS_PROVIDER});
+//		 else
+//			 parameter.setProviders(new String[]{LocationManager.NETWORK_PROVIDER});
 		
 		// try GPS and fall back to NETWORK_PROVIDER
-		//parameter.setProviders(new String[] {LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER});
-		parameter.setTimeout(25000);
+		parameter.setProviders(new String[] {LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER});
+		parameter.setTimeout(8000);
 		i.putExtras(bundle);
 		
 		pi=PendingIntent.getBroadcast(this, 0, i, 0);
